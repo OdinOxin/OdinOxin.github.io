@@ -1,4 +1,4 @@
-import * as re from 're';
+// import * as re from 're';
 import * as yaml from 'yaml';
 import * as svg from 'svgutils/transform';
 
@@ -39,7 +39,7 @@ document.getElementById("btn").onclick = function () {
     var data, filename;
     filename = "Shapes/" + func + ".svg";
     data = "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"256\" height=\"256\">\n   <defs>\n      <clipPath id=\"person\">\n         <path d=\"M64,128 L128,64 L192,128 L128,192 Z\" />\n      </clipPath>\n   </defs>\n   <path d=\"M64,128 L128,64 L192,128 L128,192 Z\" stroke-width=\"5\" stroke=\"#FFFFFF\" fill=\"#003399\" />\n   <path d=\"M64,128 L128,64 L192,128 L128,192 Z\" stroke-width=\"12\" stroke=\"#FFFFFF\" fill=\"#003399\" clip-path=\"url(#person)\" />\n   <path d=\"M64,128 L128,64 L192,128 L128,192 Z\" stroke-width=\"2\" stroke=\"#000000\" fill=\"none\" />\n   <text x=\"128\" y=\"128\" style=\"font-family: 'Roboto Slab'; font-weight: bold; dominant-baseline: central; text-anchor: middle; font-size: 300%;\" fill=\"#FFFFFF\">{{UNIT}}</text>\n</svg>";
-    data = re.sub("{{UNIT}}", unit, data);
+    // data = re.sub("{{UNIT}}", unit, data);
     return svg.fromstring(data);
     }
 
