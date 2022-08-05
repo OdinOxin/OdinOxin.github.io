@@ -1,6 +1,6 @@
 // import * as re from 're';
-import * as yaml from 'yaml';
-import * as svg from 'svgutils/transform';
+const yaml = require('yaml');
+const svg = require('svgutils').Svg;
 
 usrInput = document.getElementById("usrInput")
 output = document.getElementById("output")
