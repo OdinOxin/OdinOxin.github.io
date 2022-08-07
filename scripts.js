@@ -4,14 +4,16 @@ outputSvg = document.getElementById("outputSvg")
 
 var getSign = function (sign) {
     var req = new XMLHttpRequest();
-    req.open('GET', '/signs/FaHe.svg');
-    req.onreadystatechange = function() {
-      alert(req.responseText);
-    }
+    req.open('GET', `/signs/${sign}.svg`, false);
+    // req.onreadystatechange = function() {
+    //   return req.responseText
+    // }
     req.send();
+    return req.responseText
 }
 
 document.getElementById("btn").onclick = function () {
+    alert(getSign('FaHe'));
     var childSvg = document.createElement('g');
     childSvg.setAttribute('transform', 'translate(0, 0) scale(1 1)')
     childSvg.innerHTML = `<defs>
