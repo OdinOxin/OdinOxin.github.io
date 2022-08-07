@@ -3,6 +3,13 @@ outputTxt = document.getElementById("outputTxt")
 outputSvg = document.getElementById("outputSvg")
 
 document.getElementById("btn").onclick = function () {
+    var req = new XMLHttpRequest();
+    req.open('GET', '/signs/FaHe.svg');
+    req.onreadystatechange = function() {
+      alert(req.responseText);
+    }
+    req.send();
+
     var childSvg = document.createElement('svg');
     childSvg.setAttribute('width', 256)
     childSvg.setAttribute('height', 256)
