@@ -2,14 +2,16 @@ usrInput = document.getElementById("usrInput")
 outputTxt = document.getElementById("outputTxt")
 outputSvg = document.getElementById("outputSvg")
 
-document.getElementById("btn").onclick = function () {
+var getSign = function (sign) {
     var req = new XMLHttpRequest();
     req.open('GET', '/signs/FaHe.svg');
     req.onreadystatechange = function() {
       alert(req.responseText);
     }
     req.send();
+}
 
+document.getElementById("btn").onclick = function () {
     var childSvg = document.createElement('g');
     childSvg.innerHTML = `<defs>
         <clipPath id="person">
