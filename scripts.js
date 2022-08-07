@@ -13,6 +13,7 @@ var getSign = function (sign) {
 
 document.getElementById("btn").onclick = function () {
     var childSvg = document.createElement('g');
+    childSvg.setAttribute('transform', 'translate(0, 0) scale(1 1)')
     childSvg.innerHTML = `<defs>
         <clipPath id="person">
             <path d="M64,128 L128,64 L192,128 L128,192 Z" />
