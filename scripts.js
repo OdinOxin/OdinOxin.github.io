@@ -3,7 +3,8 @@ outputTxt = document.getElementById("outputTxt")
 outputSvg = document.getElementById("outputSvg")
 
 document.getElementById("btn").onclick = function () {
-    outputSvg.appendChild(`<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="256" height="256">
+    var childSvg = document.createElement('svg');
+    div.innerHTML = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="256" height="256">
         <defs>
             <clipPath id="person">
                 <path d="M64,128 L128,64 L192,128 L128,192 Z" />
@@ -16,8 +17,10 @@ document.getElementById("btn").onclick = function () {
         <ellipse cx="156" cy="44" rx="10" ry="10" fill="#000000" />
         <path d="M64,128 L128,64 L192,128 L128,192 Z" stroke-width="2" stroke="#000000" fill="none" />
         <text x="128" y="128" style="font-family: 'Roboto Slab'; font-weight: bold; dominant-baseline: central; text-anchor: middle; font-size: 300%;" fill="#FFFFFF">{{UNIT}}</text>
-    </svg>`)
-    outputSvg.appendChild(`<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="256" height="256" transform="translate(256, 0)">
+    </svg>`;
+    outputSvg.appendChild(childSvg);
+    childSvg = document.createElement('svg');
+    div.innerHTML = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="256" height="256" transform="translate(256, 0)">
         <defs>
             <clipPath id="person">
                 <path d="M64,128 L128,64 L192,128 L128,192 Z" />
@@ -29,5 +32,6 @@ document.getElementById("btn").onclick = function () {
         <ellipse cx="128" cy="44" rx="10" ry="10" fill="#000000" />
         <path d="M64,128 L128,64 L192,128 L128,192 Z" stroke-width="2" stroke="#000000" fill="none" />
         <text x="128" y="128" style="font-family: 'Roboto Slab'; font-weight: bold; dominant-baseline: central; text-anchor: middle; font-size: 300%;" fill="#FFFFFF">{{UNIT}}</text>
-    </svg>`)
+    </svg>`;
+    outputSvg.appendChild(childSvg);
 }
