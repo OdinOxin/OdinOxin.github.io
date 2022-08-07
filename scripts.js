@@ -10,14 +10,14 @@ var getSign = function (sign, unit) {
 }
 
 document.getElementById("btn").onclick = function () {
-    var newSvg = document.createElement('svg');
+    // var newSvg = document.createElement('svg');
     var childSvg = document.createElement('g');
     childSvg.setAttribute('transform', 'translate(0, 0) scale(1 1)')
     childSvg.innerHTML = getSign('GrFü', 'B')
-    newSvg.appendChild(childSvg);
+    outputSvg.appendChild(childSvg);
     childSvg = document.createElement('g');
     childSvg.setAttribute('transform', 'translate(256, 0) scale(1 1)')
     childSvg.innerHTML = getSign('TrFü', 'N');
-    newSvg.appendChild(childSvg);
-    outputSvg.innerHTML = newSvg.innerHTML;
+    outputSvg.appendChild(childSvg);
+    // outputSvg.innerHTML = newSvg.innerHTML;
 }
