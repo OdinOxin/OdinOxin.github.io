@@ -24,4 +24,5 @@ document.getElementById("btn").onclick = function () {
     childSvg.innerHTML = getSign('TrFü', 'N');
     newSvg.appendChild(childSvg);
     outputSvg.innerHTML = newSvg.innerHTML;
+    outputTxt.Text = outputSvg.outerHTML;
 }
