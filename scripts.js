@@ -4,6 +4,8 @@ outputSvg = document.getElementById("outputSvg")
 
 document.getElementById("btn").onclick = function () {
     var childSvg = document.createElement('svg');
+    childSvg.setAttribute('width', 256)
+    childSvg.setAttribute('height', 256)
     childSvg.innerHTML = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="256" height="256">
         <defs>
             <clipPath id="person">
@@ -20,18 +22,19 @@ document.getElementById("btn").onclick = function () {
     </svg>`;
     outputSvg.appendChild(childSvg);
     childSvg = document.createElement('svg');
-    childSvg.innerHTML = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="256" height="256" transform="translate(256, 0)">
-        <defs>
-            <clipPath id="person">
-                <path d="M64,128 L128,64 L192,128 L128,192 Z" />
-            </clipPath>
-        </defs>
-        <path d="M64,128 L128,64 L192,128 L128,192 Z" stroke-width="5" stroke="#FFFFFF" fill="#003399" />
-        <path d="M64,128 L128,64 L192,128 L128,192 Z" stroke-width="12" stroke="#FFFFFF" fill="#003399" clip-path="url(#person)" />
-        <rect x="64" y="64" width="128" height="24" fill="#FFFFFF" clip-path="url(#person)" />
-        <ellipse cx="128" cy="44" rx="10" ry="10" fill="#000000" />
-        <path d="M64,128 L128,64 L192,128 L128,192 Z" stroke-width="2" stroke="#000000" fill="none" />
-        <text x="128" y="128" style="font-family: 'Roboto Slab'; font-weight: bold; dominant-baseline: central; text-anchor: middle; font-size: 300%;" fill="#FFFFFF">{{UNIT}}</text>
-    </svg>`;
+    childSvg.setAttribute('width', 256)
+    childSvg.setAttribute('height', 256)
+    childSvg.setAttribute('transform', 'translate(256, 0)')
+    childSvg.innerHTML = `<defs>
+        <clipPath id="person">
+            <path d="M64,128 L128,64 L192,128 L128,192 Z" />
+        </clipPath>
+    </defs>
+    <path d="M64,128 L128,64 L192,128 L128,192 Z" stroke-width="5" stroke="#FFFFFF" fill="#003399" />
+    <path d="M64,128 L128,64 L192,128 L128,192 Z" stroke-width="12" stroke="#FFFFFF" fill="#003399" clip-path="url(#person)" />
+    <rect x="64" y="64" width="128" height="24" fill="#FFFFFF" clip-path="url(#person)" />
+    <ellipse cx="128" cy="44" rx="10" ry="10" fill="#000000" />
+    <path d="M64,128 L128,64 L192,128 L128,192 Z" stroke-width="2" stroke="#000000" fill="none" />
+    <text x="128" y="128" style="font-family: 'Roboto Slab'; font-weight: bold; dominant-baseline: central; text-anchor: middle; font-size: 300%;" fill="#FFFFFF">{{UNIT}}</text>`;
     outputSvg.appendChild(childSvg);
 }
