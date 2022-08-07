@@ -26,7 +26,7 @@ var getText = function (text, x, y) {
     var txt = document.createElement('text');
     txt.setAttribute('x', x);
     txt.setAttribute('y', y);
-    txt.setAttribute('font-size', 18);
+    txt.setAttribute('font-size', 24);
     txt.setAttribute('font-family', 'Verdana');
     txt.setAttribute('text-anchor', 'middle');
     txt.setAttribute('fill', 'black');
