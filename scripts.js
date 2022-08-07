@@ -30,7 +30,7 @@ var getText = function (text, x, y) {
     txt.setAttribute('font-family', 'Verdana');
     txt.setAttribute('text-anchor', 'middle');
     txt.setAttribute('fill', 'black');
-    txt.Text = text;
+    txt.value = text;
     return txt;
 }
 
@@ -47,8 +47,9 @@ var buildRecursive = function (canvas, root, layer, x, y) {
         if(root.hasOwnProperty('name')){
             var name = root['name'];
             var offset = -32;
-            for (let namePart in name.split(', ')){
-                canvas.appendChild(getText(namePart, x + signWidth / 2, y + signHeight + offset));
+            var nameParts = name.split(', ');
+            for (let namePart in nameParts){
+                canvas.appendChild(getText(nameParts[namePart], x + signWidth / 2, y + signHeight + offset));
                 offset += 24;
             }
         }
