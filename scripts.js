@@ -21,9 +21,7 @@ document.getElementById("btn").onclick = function () {
         <text x="128" y="128" style="font-family: 'Roboto Slab'; font-weight: bold; dominant-baseline: central; text-anchor: middle; font-size: 300%;" fill="#FFFFFF">{{UNIT}}</text>
     </svg>`;
     outputSvg.appendChild(childSvg);
-    childSvg = document.createElement('svg');
-    childSvg.setAttribute('width', 256)
-    childSvg.setAttribute('height', 256)
+    childSvg = document.createElement('g');
     childSvg.setAttribute('transform', 'translate(256, 0)')
     childSvg.innerHTML = `<defs>
         <clipPath id="person">
