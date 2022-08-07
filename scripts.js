@@ -145,6 +145,7 @@ document.getElementById("btn").onclick = function () {
 
     var canvas = document.createElement('svg');
     var rows = buildRecursive(canvas, root, 0, 0, 0);
+    var columns = maxColumns;
 
     // Draw Border
     canvas.appendChild(getLine(0, 0, columns * signWidth, 0));
