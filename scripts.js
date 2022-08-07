@@ -4,7 +4,7 @@ outputSvg = document.getElementById("outputSvg")
 
 document.getElementById("btn").onclick = function () {
     var childSvg = document.createElement('svg');
-    div.innerHTML = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="256" height="256">
+    childSvg.innerHTML = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="256" height="256">
         <defs>
             <clipPath id="person">
                 <path d="M64,128 L128,64 L192,128 L128,192 Z" />
@@ -20,7 +20,7 @@ document.getElementById("btn").onclick = function () {
     </svg>`;
     outputSvg.appendChild(childSvg);
     childSvg = document.createElement('svg');
-    div.innerHTML = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="256" height="256" transform="translate(256, 0)">
+    childSvg.innerHTML = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="256" height="256" transform="translate(256, 0)">
         <defs>
             <clipPath id="person">
                 <path d="M64,128 L128,64 L192,128 L128,192 Z" />
