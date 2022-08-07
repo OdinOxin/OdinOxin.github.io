@@ -53,9 +53,9 @@ var buildRecursive = function (canvas, root, layer, x, y) {
             }
         }
     }
-    if(root.hasOwnProperty('sub')){
+    if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
         var col = 0;
-        var leafs = list(filter(item => !item.hasOwnProperty('sub') || !Array.isArray(item["sub"]) || !item["sub"].length, root["sub"]));
+        var leafs = root['sub'].filter(item => !item.hasOwnProperty('sub') || !Array.isArray(item["sub"]) || !item["sub"].length);
         for(let item in leafs){
             col += 1;
             if((col + layer) % 7 == 0) {
@@ -66,7 +66,7 @@ var buildRecursive = function (canvas, root, layer, x, y) {
         }
         if(leafs.length > 0)
             row += 1;
-        var subTrees = list(filter(item => item.hasOwnProperty('sub') && Array.isArray(item["sub"]) && item["sub"].length > 0, root["sub"]));
+        var subTrees = root["sub"].filter(item => item.hasOwnProperty('sub') && Array.isArray(item["sub"]) && item["sub"].length > 0);
         if(subTrees.length > 0) {
             canvas.appendChild(getLine(x + signWidth - lineGap, y + signHeight / 2, x + signWidth, y + signHeight / 2));
             var rowLineEnd = row;
