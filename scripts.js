@@ -1,3 +1,8 @@
+const maxColumns = 7
+const signWidth = 256
+const signHeight = 256
+const lineGap = 50
+
 usrInput = document.getElementById("usrInput")
 outputTxt = document.getElementById("outputTxt")
 outputSvg = document.getElementById("outputSvg")
@@ -17,6 +22,18 @@ var getLine = function (ax, ay, bx, by) {
     return line;
 }
 
+var getText = function (text, x, y) {
+    var txt = document.createElement('text');
+    txt.setAttribute('x', x);
+    txt.setAttribute('y', y);
+    txt.setAttribute('font-size', 24);
+    txt.setAttribute('font-family', 'Verdana');
+    txt.setAttribute('text-anchor', 'middle');
+    txt.setAttribute('fill', 'black');
+    txt.Text = text;
+    return txt;
+}
+
 var buildRecursive = function (canvas, root, layer, x, y) {
     var row = 0;
     if (root.hasOwnProperty('func')){
@@ -31,15 +48,7 @@ var buildRecursive = function (canvas, root, layer, x, y) {
             var name = root['name'];
             var offset = -32;
             for (let namePart in name.split(', ')){
-                var txt = document.createElement('text');
-                txt.setAttribute('x', x + signWidth / 2);
-                txt.setAttribute('y', y + signHeight + offset);
-                txt.setAttribute('font-size', 24);
-                txt.setAttribute('font-family', 'Verdana');
-                txt.setAttribute('text-anchor', 'middle');
-                txt.setAttribute('fill', 'black');
-                txt.Text = namePart;
-                canvas.appendChild(txt);
+                canvas.appendChild(getText(namePart, x + signWidth / 2, y + signHeight + offset));
                 offset += 24;
             }
         }
@@ -134,17 +143,16 @@ document.getElementById("btn").onclick = function () {
         ]
     }
 
-    var newSvg = document.createElement('svg');
-    buildRecursive(newSvg, root, 0, 0, 0);
+    var canvas = document.createElement('svg');
+    var rows = buildRecursive(canvas, root, 0, 0, 0);
 
-    var childSvg = document.createElement('g');
-    childSvg.setAttribute('transform', 'translate(0, 0) scale(1 1)')
-    childSvg.innerHTML = getSign('GrFü', 'B')
-    newSvg.appendChild(childSvg);
-    childSvg = document.createElement('g');
-    childSvg.setAttribute('transform', 'translate(256, 0) scale(1 1)')
-    childSvg.innerHTML = getSign('TrFü', 'N');
-    newSvg.appendChild(childSvg);
-    outputSvg.innerHTML = newSvg.innerHTML;
+    // Draw Border
+    canvas.appendChild(getLine(0, 0, columns * signWidth, 0));
+    canvas.appendChild(getLine(columns * signWidth, 0, columns * signWidth, rows * signHeight));
+    canvas.appendChild(getLine(columns * signWidth, rows * signHeight, 0, rows * signHeight));
+    canvas.appendChild(getLine(0, rows * signHeight, 0, 0));
+
+    // Output
+    outputSvg.innerHTML = canvas.innerHTML;
     outputTxt.Text = outputSvg.outerHTML;
 }
