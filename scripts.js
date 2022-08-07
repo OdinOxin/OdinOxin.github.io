@@ -155,5 +155,7 @@ document.getElementById("btn").onclick = function () {
 
     // Output
     outputSvg.innerHTML = canvas.innerHTML;
+    outputSvg.setAttribute('widht', columns * signWidth);
+    outputSvg.setAttribute('heigth', rows * signHeight);
     outputTxt.Text = outputSvg.outerHTML;
 }
