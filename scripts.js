@@ -9,15 +9,19 @@ var getSign = function (sign, unit) {
     return req.responseText.replace('{{UNIT}}', unit)
 }
 
+var buildRecursive = function (fig, root, layer, x, y) {
+
+}
+
 document.getElementById("btn").onclick = function () {
-    // var newSvg = document.createElement('svg');
+    var newSvg = document.createElement('svg');
     var childSvg = document.createElement('g');
     childSvg.setAttribute('transform', 'translate(0, 0) scale(1 1)')
     childSvg.innerHTML = getSign('GrFü', 'B')
-    outputSvg.appendChild(childSvg);
+    newSvg.appendChild(childSvg);
     childSvg = document.createElement('g');
     childSvg.setAttribute('transform', 'translate(256, 0) scale(1 1)')
     childSvg.innerHTML = getSign('TrFü', 'N');
-    outputSvg.appendChild(childSvg);
-    // outputSvg.innerHTML = newSvg.innerHTML;
+    newSvg.appendChild(childSvg);
+    outputSvg.innerHTML = newSvg.innerHTML;
 }
