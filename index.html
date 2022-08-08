@@ -1,6 +1,7 @@
-<input id="usrInput"
-    type="text"/><br/>
 <button id="btn" type="button">Submit</button><br/>
+<br/>
+<label for="iptConfig">Select a config file:</label>
+<input type="file" id="iptConfig" name="iptConfig" accept="Config/json">
 <br/>
 <svg id="outputSvg"
     xmlns="http://www.w3.org/2000/svg"
@@ -9,6 +10,10 @@
     width="512"
     height="256">
 </svg><br/>
+<br/>
+<button id="btnDownloadConfig" type="button">Download Config</button>
+<button id="btnDownloadSvg" type="button">Download Vector Image (*.svg)</button><br/>
+<br/>
 <input id="outputTxt"
     type="text"/>
 
