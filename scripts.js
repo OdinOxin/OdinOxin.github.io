@@ -75,11 +75,7 @@ function configSelected(evt) {
         var preamble = 'data:application/json;base64,';
         if(data.startsWith(preamble))
             data = data.substring(preamble.length);
-        var result = JSON.parse(atob(data));
-        var formatted = JSON.stringify(result, null, 2);
-        /*
-        Code für AJAX-Request hier einfügen
-        */
+        config = JSON.parse(atob(data));
     }
     reader.readAsDataURL(evt.target.files[0]);
 }
