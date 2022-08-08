@@ -65,7 +65,6 @@ var config = {
 }
 
 usrInput = document.getElementById("usrInput");
-outputTxt = document.getElementById("outputTxt");
 outputSvg = document.getElementById("outputSvg");
 iptConfig = document.getElementById('iptConfig');
 
@@ -88,14 +87,22 @@ document.addEventListener('DOMContentLoaded', function() {
     iptConfig.addEventListener('change', configSelected, false);
 });
 
-document.getElementById('btnDownloadConfig').onclick = function () {
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(config, null, 2));
+function download(content, type, filename) {
+    var dataStr = `data:${type};charset=utf-8,` + encodeURIComponent(content);
     var downloadJsonAnchorNode = document.createElement('a');
     downloadJsonAnchorNode.setAttribute("href", dataStr);
-    downloadJsonAnchorNode.setAttribute("download", "FüHarke.json");
+    downloadJsonAnchorNode.setAttribute("download", filename);
     document.body.appendChild(downloadJsonAnchorNode);
     downloadJsonAnchorNode.click();
     downloadJsonAnchorNode.remove();
+}
+
+document.getElementById('btnDownloadConfig').onclick = function () {
+    download(JSON.stringify(config, null, 2), 'text/json', 'FüHarke.json');
+}
+
+document.getElementById('btnDownloadSvg').onclick = function () {
+    download(outputSvg.outerHTML, 'image/svg', 'FüHarke.svg');
 }
 
 var getSign = function (sign, unit) {
@@ -188,5 +195,4 @@ document.getElementById("btn").onclick = function () {
     outputSvg.innerHTML = canvas.innerHTML;
     outputSvg.setAttribute('width', columns * signWidth);
     outputSvg.setAttribute('height', rows * signHeight);
-    outputTxt.value = outputSvg.outerHTML;
 }
