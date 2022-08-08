@@ -72,7 +72,11 @@ iptConfig = document.getElementById('iptConfig');
 function configSelected(evt) {
     var reader = new FileReader();
     reader.onload = function(e) {
-        var result = JSON.parse(atob(e.target.result));
+        var data = e.target.result;
+        var preamble = 'data:application/json;base64,';
+        if(data.startsWith(preamble))
+            data = data.substring(preamble.length);
+        var result = JSON.parse(atob(data));
         var formatted = JSON.stringify(result, null, 2);
         /*
         Code für AJAX-Request hier einfügen
