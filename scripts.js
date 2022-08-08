@@ -75,7 +75,8 @@ function configSelected(evt) {
         var preamble = 'data:application/json;base64,';
         if(data.startsWith(preamble))
             data = data.substring(preamble.length);
-        config = JSON.parse(atob(data));
+        var ab = atob(data);
+        config = JSON.parse(ab);
         draw();
     }
     reader.readAsDataURL(evt.target.files[0]);
