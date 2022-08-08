@@ -70,31 +70,22 @@ outputSvg = document.getElementById("outputSvg");
 iptConfig = document.getElementById('iptConfig');
 
 function configSelected(evt) {
-    var files = evt.target.files;
-    var senddata = new Object();
-    senddata.name = files[0].name;
-    senddata.date = files[0].lastModified;
-    senddata.size = files[0].size;
-    senddata.type = files[0].type;
     var reader = new FileReader();
     reader.onload = function(e) {
-        senddata.fileData = e.target.result;
-
-        var result = JSON.parse(e.target.result);
+        var result = JSON.parse(atob(e.target.result));
         var formatted = JSON.stringify(result, null, 2);
-        document.getElementById('result').value = formatted;
         /*
         Code für AJAX-Request hier einfügen
         */
     }
-    reader.readAsDataURL(files[0]);
+    reader.readAsDataURL(evt.target.files[0]);
 }
 document.addEventListener('DOMContentLoaded', function() {
     iptConfig.addEventListener('change', configSelected, false);
 });
 
 document.getElementById('btnDownloadConfig').onclick = function () {
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(config));
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(config, null, 2));
     var downloadJsonAnchorNode = document.createElement('a');
     downloadJsonAnchorNode.setAttribute("href", dataStr);
     downloadJsonAnchorNode.setAttribute("download", "FüHarke.json");
