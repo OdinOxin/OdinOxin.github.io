@@ -68,6 +68,19 @@ usrInput = document.getElementById("usrInput");
 outputSvg = document.getElementById("outputSvg");
 iptConfig = document.getElementById('iptConfig');
 
+function b64EncodeUnicode(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+        function toSolidBytes(match, p1) {
+            return String.fromCharCode('0x' + p1);
+    }));
+}
+
+function b64DecodeUnicode(str) {
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
+
 function configSelected(evt) {
     var reader = new FileReader();
     reader.onload = function(e) {
@@ -75,7 +88,7 @@ function configSelected(evt) {
         var preamble = 'data:application/json;base64,';
         if(data.startsWith(preamble))
             data = data.substring(preamble.length);
-        var ab = atob(data);
+        var ab = b64DecodeUnicode(data);
         config = JSON.parse(ab);
         draw();
     }
@@ -86,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function download(content, type, filename) {
-    var dataStr = `data:${type};charset=utf-8,` + encodeURIComponent(content);
+    var dataStr = `data:${type};charset=utf-8,` + b64EncodeUnicode(content);
     var downloadJsonAnchorNode = document.createElement('a');
     downloadJsonAnchorNode.setAttribute("href", dataStr);
     downloadJsonAnchorNode.setAttribute("download", filename);
