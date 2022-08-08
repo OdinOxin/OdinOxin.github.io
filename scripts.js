@@ -77,8 +77,12 @@ function configSelected(evt) {
     senddata.size = files[0].size;
     senddata.type = files[0].type;
     var reader = new FileReader();
-    reader.onload = function(theFileData) {
-        senddata.fileData = theFileData.target.result;
+    reader.onload = function(e) {
+        senddata.fileData = e.target.result;
+
+        var result = JSON.parse(e.target.result);
+        var formatted = JSON.stringify(result, null, 2);
+        document.getElementById('result').value = formatted;
         /*
         Code für AJAX-Request hier einfügen
         */
