@@ -76,6 +76,7 @@ function configSelected(evt) {
         if(data.startsWith(preamble))
             data = data.substring(preamble.length);
         config = JSON.parse(atob(data));
+        draw();
     }
     reader.readAsDataURL(evt.target.files[0]);
 }
@@ -101,14 +102,14 @@ document.getElementById('btnDownloadSvg').onclick = function () {
     download(outputSvg.outerHTML, 'image/svg', 'FüHarke.svg');
 }
 
-var getSign = function (sign, unit) {
+function getSign(sign, unit) {
     var req = new XMLHttpRequest();
     req.open('GET', `/signs/${sign}.svg`, false);
     req.send();
     return req.responseText.replace('{{UNIT}}', unit)
 }
 
-var getLine = function (ax, ay, bx, by) {
+function getLine(ax, ay, bx, by) {
     var line = document.createElement('path');
     line.setAttribute('stroke-width', 1);
     line.setAttribute('stroke', 'black');
@@ -116,7 +117,7 @@ var getLine = function (ax, ay, bx, by) {
     return line;
 }
 
-var getText = function (text, x, y) {
+function getText(text, x, y) {
     var txt = document.createElement('text');
     txt.setAttribute('x', x);
     txt.setAttribute('y', y);
@@ -128,7 +129,7 @@ var getText = function (text, x, y) {
     return txt;
 }
 
-var buildRecursive = function (canvas, root, layer, x, y) {
+function buildRecursive(canvas, root, layer, x, y) {
     var row = 0;
     if (root.hasOwnProperty('func')){
         var unit = '';
@@ -176,7 +177,7 @@ var buildRecursive = function (canvas, root, layer, x, y) {
     return row;
 }
 
-document.getElementById("btn").onclick = function () {
+function draw() {
     var canvas = document.createElement('svg');
     var rows = buildRecursive(canvas, config, 0, 0, 0);
     var columns = maxColumns;
@@ -192,3 +193,5 @@ document.getElementById("btn").onclick = function () {
     outputSvg.setAttribute('width', columns * signWidth);
     outputSvg.setAttribute('height', rows * signHeight);
 }
+
+draw();
