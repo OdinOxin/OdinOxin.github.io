@@ -3,6 +3,67 @@ const signWidth = 256
 const signHeight = 256
 const lineGap = 50
 
+var root = {
+    "unit": "TZ",
+    "name": "Der Zugführer",
+    "func": "ZFü",
+    "sub": [
+        {
+            "unit": "TZ",
+            "name": "Der Zugtruppführer",
+            "func": "ZTrFü",
+            "sub": [
+                {
+                    "name": "ZTr-Helfer 1",
+                    "func": "FaHe"
+                },
+                {
+                    "name": "ZTr-Helfer 2",
+                    "func": "FaHe"
+                },
+                {
+                    "name": "ZTr-Helfer 3",
+                    "func": "FaHe"
+                },
+                {
+                    "name": "ZTr-Helfer 4",
+                    "func": "FaHe",
+                    "unit": "KF"
+                }
+            ]
+        },
+        {
+            "unit": "B",
+            "name": "Der Gruppenführer",
+            "func": "GrFü",
+            "sub": [
+                {
+                    "name": "Der Truppführer",
+                    "func": "TrFü",
+                    "unit": "B",
+                    "sub": null
+                },
+                {
+                    "name": "B-Helfer 1",
+                    "func": "FaHe"
+                },
+                {
+                    "name": "B-Helfer 2",
+                    "func": "FaHe"
+                },
+                {
+                    "name": "B-Helfer 3",
+                    "func": "FaHe"
+                },
+                {
+                    "name": "B-Helfer 4",
+                    "func": "FaHe"
+                }
+            ]
+        }
+    ]
+}
+
 usrInput = document.getElementById("usrInput");
 outputTxt = document.getElementById("outputTxt");
 outputSvg = document.getElementById("outputSvg");
@@ -27,6 +88,12 @@ function configSelected(evt) {
 document.addEventListener('DOMContentLoaded', function() {
     iptConfig.addEventListener('change', configSelected, false);
 });
+
+document.getElementById('btnDownloadConfig').onclick = function () {
+    var data = new Blob([root]);
+    var a = document.getElementById('a');
+    a.href = URL.createObjectURL(data);
+}
 
 var getSign = function (sign, unit) {
     var req = new XMLHttpRequest();
@@ -104,67 +171,6 @@ var buildRecursive = function (canvas, root, layer, x, y) {
 }
 
 document.getElementById("btn").onclick = function () {
-    var root = {
-        "unit": "TZ",
-        "name": "Der Zugführer",
-        "func": "ZFü",
-        "sub": [
-            {
-                "unit": "TZ",
-                "name": "Der Zugtruppführer",
-                "func": "ZTrFü",
-                "sub": [
-                    {
-                        "name": "ZTr-Helfer 1",
-                        "func": "FaHe"
-                    },
-                    {
-                        "name": "ZTr-Helfer 2",
-                        "func": "FaHe"
-                    },
-                    {
-                        "name": "ZTr-Helfer 3",
-                        "func": "FaHe"
-                    },
-                    {
-                        "name": "ZTr-Helfer 4",
-                        "func": "FaHe",
-                        "unit": "KF"
-                    }
-                ]
-            },
-            {
-                "unit": "B",
-                "name": "Der Gruppenführer",
-                "func": "GrFü",
-                "sub": [
-                    {
-                        "name": "Der Truppführer",
-                        "func": "TrFü",
-                        "unit": "B",
-                        "sub": null
-                    },
-                    {
-                        "name": "B-Helfer 1",
-                        "func": "FaHe"
-                    },
-                    {
-                        "name": "B-Helfer 2",
-                        "func": "FaHe"
-                    },
-                    {
-                        "name": "B-Helfer 3",
-                        "func": "FaHe"
-                    },
-                    {
-                        "name": "B-Helfer 4",
-                        "func": "FaHe"
-                    }
-                ]
-            }
-        ]
-    }
-
     var canvas = document.createElement('svg');
     var rows = buildRecursive(canvas, root, 0, 0, 0);
     var columns = maxColumns;
