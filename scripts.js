@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function download(content, type, filename) {
-    var dataStr = `data:${type};charset=utf-8,` + b64EncodeUnicode(content);
+    var dataStr = `data:${type};charset=utf-8,` + encodeURIComponent(content);
     var downloadJsonAnchorNode = document.createElement('a');
     downloadJsonAnchorNode.setAttribute("href", dataStr);
     downloadJsonAnchorNode.setAttribute("download", filename);
