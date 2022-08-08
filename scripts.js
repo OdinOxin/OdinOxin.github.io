@@ -3,9 +3,30 @@ const signWidth = 256
 const signHeight = 256
 const lineGap = 50
 
-usrInput = document.getElementById("usrInput")
-outputTxt = document.getElementById("outputTxt")
-outputSvg = document.getElementById("outputSvg")
+usrInput = document.getElementById("usrInput");
+outputTxt = document.getElementById("outputTxt");
+outputSvg = document.getElementById("outputSvg");
+iptConfig = document.getElementById('iptConfig');
+
+function configSelected(evt) {
+    var files = evt.target.files;
+    var senddata = new Object();
+    senddata.name = files[0].name;
+    senddata.date = files[0].lastModified;
+    senddata.size = files[0].size;
+    senddata.type = files[0].type;
+    var reader = new FileReader();
+    reader.onload = function(theFileData) {
+        senddata.fileData = theFileData.target.result;
+        /*
+        Code für AJAX-Request hier einfügen
+        */
+    }
+    reader.readAsDataURL(files[0]);
+}
+document.addEventListener('DOMContentLoaded', function() {
+    iptConfig.addEventListener('change', configSelected, false);
+});
 
 var getSign = function (sign, unit) {
     var req = new XMLHttpRequest();
