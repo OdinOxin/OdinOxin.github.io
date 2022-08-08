@@ -3,7 +3,7 @@ const signWidth = 256
 const signHeight = 256
 const lineGap = 50
 
-var root = {
+var config = {
     "unit": "TZ",
     "name": "Der Zugführer",
     "func": "ZFü",
@@ -89,9 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
     iptConfig.addEventListener('change', configSelected, false);
 });
 
-var data = new Blob([root]);
-btnDownloadConfig = document.getElementById('btnDownloadConfig');
-btnDownloadConfig.href = URL.createObjectURL(data);
+document.getElementById('btnDownloadConfig').onclick = function () {
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(config));
+    var downloadJsonAnchorNode = document.createElement('a');
+    downloadJsonAnchorNode.setAttribute("href", dataStr);
+    downloadJsonAnchorNode.setAttribute("download", "FüHarke.json");
+    document.body.appendChild(downloadJsonAnchorNode);
+    downloadJsonAnchorNode.click();
+    downloadJsonAnchorNode.remove();
+}
 
 var getSign = function (sign, unit) {
     var req = new XMLHttpRequest();
@@ -170,7 +176,7 @@ var buildRecursive = function (canvas, root, layer, x, y) {
 
 document.getElementById("btn").onclick = function () {
     var canvas = document.createElement('svg');
-    var rows = buildRecursive(canvas, root, 0, 0, 0);
+    var rows = buildRecursive(canvas, config, 0, 0, 0);
     var columns = maxColumns;
 
     // Draw Border
