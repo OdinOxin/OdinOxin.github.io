@@ -89,11 +89,9 @@ document.addEventListener('DOMContentLoaded', function() {
     iptConfig.addEventListener('change', configSelected, false);
 });
 
-document.getElementById('btnDownloadConfig').onclick = function () {
-    var data = new Blob([root]);
-    var a = document.getElementById('a');
-    a.href = URL.createObjectURL(data);
-}
+var data = new Blob([root]);
+btnDownloadConfig = document.getElementById('btnDownloadConfig');
+btnDownloadConfig.href = URL.createObjectURL(data);
 
 var getSign = function (sign, unit) {
     var req = new XMLHttpRequest();
