@@ -153,7 +153,7 @@ function editName(uuid) {
             x = elements[idx].x;
         if(y == undefined || y > elements[idx].y)
             y = elements[idx].y;
-        elements[idx].remove();
+        elements[idx].parentNode.removeChild(elements[idx]);
     }
     appendText(outputSvg, uuid, newName, x, y + 32);
 }
