@@ -126,6 +126,20 @@ document.getElementById('btnDownloadSvg').onclick = function () {
     download(outputSvg.outerHTML, 'image/svg', 'FüHarke.svg');
 }
 
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    // ev.target.appendChild(document.getElementById(data));
+}
+
 function getConfigElementByUuid(root, uuid) {
     if (root.hasOwnProperty('uuid') && root['uuid'] == uuid){
         return root;
@@ -154,6 +168,15 @@ function getSign(sign, unit) {
     req.open('GET', `/signs/${sign}.svg`, false);
     req.send();
     return req.responseText.replace('{{UNIT}}', unit)
+}
+
+function getSignSvg(root, uuid, unit, x, y) {
+    var signSvg = document.createElement('g');
+    signSvg.setAttribute('transform', `translate(${x}, ${y}) scale(1 1)`)
+    signSvg.setAttribute('uuid', uuid);
+    signSvg.setAttribute('draggable', true);
+    signSvg.setAttribute(' ondragstart', 'drag(event)');
+    signSvg.innerHTML = getSign(root['func'], unit);
 }
 
 function getLine(ax, ay, bx, by) {
@@ -186,11 +209,7 @@ function drawRecursive(canvas, root, layer, x, y) {
         var unit = '';
         if (root.hasOwnProperty('unit'))
             unit = root['unit']
-        var signSvg = document.createElement('g');
-        signSvg.setAttribute('transform', `translate(${x}, ${y}) scale(1 1)`)
-        signSvg.setAttribute('uuid', uuid);
-        signSvg.innerHTML = getSign(root['func'], unit);
-        canvas.appendChild(signSvg);
+        canvas.appendChild(getSignSvg(root, uuid, unit, x, y));
         if(root.hasOwnProperty('name')) {
             var offset = -32;
             var nameParts = root['name'].split(', ');
