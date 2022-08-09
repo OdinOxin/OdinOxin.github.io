@@ -146,6 +146,16 @@ function editName(uuid) {
     if(newName == undefined)
         return;
     var elements = document.querySelectorAll(`text[uuid='${uuid}']`);
+    var x = undefined;
+    var y = undefined;
+    for (let idx in elements) {
+        if(x == undefined || x > elements[idx].x)
+            x = elements[idx].x;
+        if(y == undefined || y > elements[idx].y)
+            y = elements[idx].y;
+        elements[idx].remove();
+    }
+    appendText(outputSvg, uuid, newName, x, y + 32);
 }
 
 function getSign(sign, unit) {
@@ -163,7 +173,7 @@ function getLine(ax, ay, bx, by) {
     return line;
 }
 
-function getText(uuid, no, text, x, y) {
+function getText(uuid, text, x, y) {
     var txt = document.createElement('text');
     txt.setAttribute('x', x);
     txt.setAttribute('y', y);
@@ -173,9 +183,17 @@ function getText(uuid, no, text, x, y) {
     txt.setAttribute('fill', 'black');
     txt.setAttribute('onclick', `editName('${uuid}')`);
     txt.setAttribute('uuid', uuid);
-    txt.setAttribute('no', no);
     txt.innerHTML = text;
     return txt;
+}
+
+function appendText(canvas, uuid, name, x, y) {
+    var offset = -32;
+    var nameParts = name.split(', ');
+    for (let namePart in nameParts){
+        canvas.appendChild(getText(uuid, nameParts[namePart], x, y + offset));
+        offset += 24;
+    }
 }
 
 function drawRecursive(canvas, root, layer, x, y) {
@@ -191,17 +209,8 @@ function drawRecursive(canvas, root, layer, x, y) {
         signSvg.setAttribute('uuid', uuid);
         signSvg.innerHTML = getSign(root['func'], unit);
         canvas.appendChild(signSvg);
-        if(root.hasOwnProperty('name')){
-            var name = root['name'];
-            var offset = -32;
-            var nameParts = name.split(', ');
-            var no = 0;
-            for (let namePart in nameParts){
-                canvas.appendChild(getText(uuid, no, nameParts[namePart], x + signWidth / 2, y + signHeight + offset));
-                offset += 24;
-                no += 1;
-            }
-        }
+        if(root.hasOwnProperty('name'))
+            appendText(canvas, uuid, root['name'], x + signWidth / 2, y + signHeight)
     }
     if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
         var col = 0;
