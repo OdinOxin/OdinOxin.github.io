@@ -177,6 +177,7 @@ function getSignSvg(root, uuid, unit, x, y) {
     signSvg.setAttribute('draggable', true);
     signSvg.setAttribute('ondragstart', 'drag(event)');
     signSvg.innerHTML = getSign(root['func'], unit);
+    return signSvg;
 }
 
 function getLine(ax, ay, bx, by) {
