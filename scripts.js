@@ -139,14 +139,20 @@ function drag(evt) {
     }
     if (element == null || !element.classList.contains('draggable'))
         return;
-    draggingElement = evt.target;
+    draggingElement = element;
 }
 
 function dragging(evt) {
     if (draggingElement) {
         evt.preventDefault();
-        var x = parseFloat(draggingElement.getAttributeNS(null, "x"));
-        draggingElement.setAttributeNS(null, "x", x + 0.1);
+        var regx = new RegExp('translate\((\d+), (\d+)\) scale\((\d+) (\d+)\)');
+        var transform = draggingElement.getAttribute(null, 'transform');
+        var match = regx.exec(transform);
+        var x = parseFloat(match[0]) + evt.clientX;
+        var y = parseFloat(match[1]) + evt.clientY;
+        var scaleX = match[2];
+        var scaleY = match[3];
+        draggingElement.setAttribute(null, 'transform', `translate(${x}, ${y}) scale(${scaleX} ${scaleY})`);
     }
 }
 
