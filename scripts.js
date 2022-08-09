@@ -116,6 +116,10 @@ document.getElementById('btnDownloadSvg').onclick = function () {
     download(outputSvg.outerHTML, 'image/svg', 'FüHarke.svg');
 }
 
+function editName(text) {
+    alert(text)
+}
+
 function getSign(sign, unit) {
     var req = new XMLHttpRequest();
     req.open('GET', `/signs/${sign}.svg`, false);
@@ -139,11 +143,12 @@ function getText(text, x, y) {
     txt.setAttribute('font-family', 'Verdana');
     txt.setAttribute('text-anchor', 'middle');
     txt.setAttribute('fill', 'black');
+    txt.setAttribute('onclick', `editName(${text})`);
     txt.innerHTML = text;
     return txt;
 }
 
-function buildRecursive(canvas, root, layer, x, y) {
+function drawRecursive(canvas, root, layer, x, y) {
     var row = 0;
     if (root.hasOwnProperty('func')){
         var unit = '';
@@ -172,7 +177,7 @@ function buildRecursive(canvas, root, layer, x, y) {
                 col = 1;
                 row += 1;
             }
-            buildRecursive(canvas, leafs[leaf], layer + 1, x + col * signWidth, y + row * signHeight);
+            drawRecursive(canvas, leafs[leaf], layer + 1, x + col * signWidth, y + row * signHeight);
         }
         if(leafs.length > 0)
             row += 1;
@@ -183,7 +188,7 @@ function buildRecursive(canvas, root, layer, x, y) {
             for(let subTree in subTrees) {
                 canvas.appendChild(getLine(x + signWidth, y + row * signHeight + signHeight / 2, x + signWidth + lineGap, y + row * signHeight + signHeight / 2));
                 rowLineEnd = row;
-                row += buildRecursive(canvas, subTrees[subTree], layer + 1, x + signWidth, y + row * signHeight);
+                row += drawRecursive(canvas, subTrees[subTree], layer + 1, x + signWidth, y + row * signHeight);
             }
             canvas.appendChild(getLine(x + signWidth, y + signHeight / 2, x + signWidth, y + rowLineEnd * signHeight + signHeight / 2));
         }
@@ -193,7 +198,7 @@ function buildRecursive(canvas, root, layer, x, y) {
 
 function draw() {
     var canvas = document.createElement('svg');
-    var rows = buildRecursive(canvas, config, 0, 0, 0);
+    var rows = drawRecursive(canvas, config, 0, 0, 0);
     var columns = maxColumns;
 
     // Draw Border
