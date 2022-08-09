@@ -68,6 +68,16 @@ usrInput = document.getElementById("usrInput");
 outputSvg = document.getElementById("outputSvg");
 iptConfig = document.getElementById('iptConfig');
 
+function createUUID(){
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (dt + Math.random()*16)%16 | 0;
+        dt = Math.floor(dt/16);
+        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+}
+
 function b64EncodeUnicode(str) {
     return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
         function toSolidBytes(match, p1) {
@@ -117,7 +127,7 @@ document.getElementById('btnDownloadSvg').onclick = function () {
 }
 
 function editName(text) {
-    alert(text)
+    let newName = prompt("Edit Name:", "Harry Potter");
 }
 
 function getSign(sign, unit) {
@@ -135,7 +145,7 @@ function getLine(ax, ay, bx, by) {
     return line;
 }
 
-function getText(text, x, y) {
+function getText(uuid, text, x, y) {
     var txt = document.createElement('text');
     txt.setAttribute('x', x);
     txt.setAttribute('y', y);
@@ -143,19 +153,22 @@ function getText(text, x, y) {
     txt.setAttribute('font-family', 'Verdana');
     txt.setAttribute('text-anchor', 'middle');
     txt.setAttribute('fill', 'black');
-    txt.setAttribute('onclick', `editName('${text}')`);
+    txt.setAttribute('onclick', `editName('${uuid}')`);
+    txt.setAttribute('uuid', uuid);
     txt.innerHTML = text;
     return txt;
 }
 
 function drawRecursive(canvas, root, layer, x, y) {
     var row = 0;
+    var uuid = createUUID();
     if (root.hasOwnProperty('func')){
         var unit = '';
         if (root.hasOwnProperty('unit'))
             unit = root['unit']
         var signSvg = document.createElement('g');
         signSvg.setAttribute('transform', `translate(${x}, ${y}) scale(1 1)`)
+        signSvg.setAttribute('uuid', uuid);
         signSvg.innerHTML = getSign(root['func'], unit);
         canvas.appendChild(signSvg);
         if(root.hasOwnProperty('name')){
@@ -163,7 +176,7 @@ function drawRecursive(canvas, root, layer, x, y) {
             var offset = -32;
             var nameParts = name.split(', ');
             for (let namePart in nameParts){
-                canvas.appendChild(getText(nameParts[namePart], x + signWidth / 2, y + signHeight + offset));
+                canvas.appendChild(getText(uuid, nameParts[namePart], x + signWidth / 2, y + signHeight + offset));
                 offset += 24;
             }
         }
