@@ -132,17 +132,17 @@ document.getElementById('btnDownloadSvg').onclick = function () {
     download(outputSvg.outerHTML, 'image/svg', 'FüHarke.svg');
 }
 
-function drag() {
+function drag(evt) {
     if (evt.target.classList.contains('draggable')) {
         draggingElement = evt.target;
     }
 }
 
-function dragging(ev) {
+function dragging(evt) {
 
 }
 
-function drop(ev) {
+function drop(evt) {
 
 }
 
