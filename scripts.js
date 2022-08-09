@@ -126,10 +126,26 @@ document.getElementById('btnDownloadSvg').onclick = function () {
     download(outputSvg.outerHTML, 'image/svg', 'FüHarke.svg');
 }
 
-function editName(uuid) {
-    let newName = prompt("Edit Name:", "Harry Potter");
-    var elements = document.querySelectorAll(`text[uuid='${uuid}']`);
+function getConfigElementByUuid(root, uuid) {
+    if (root.hasOwnProperty('uuid') && root['uuid'] == uuid){
+        return root;
+    }
+    if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
+        for(let sub in root['sub']) {
+            var subResult = getConfigElementByUuid(sub, uuid);
+            if(subResult != undefined)
+                return subResult;
+        }
+    }
+    return undefined;
+}
 
+function editName(uuid) {
+    var item = getConfigElementByUuid(root, uuid);
+    let newName = prompt('Edit Name:', item['name']);
+    if(newName == undefined)
+        return;
+    var elements = document.querySelectorAll(`text[uuid='${uuid}']`);
 }
 
 function getSign(sign, unit) {
@@ -165,6 +181,7 @@ function getText(uuid, no, text, x, y) {
 function drawRecursive(canvas, root, layer, x, y) {
     var row = 0;
     var uuid = createUUID();
+    root['uuid'] = uuid;
     if (root.hasOwnProperty('func')){
         var unit = '';
         if (root.hasOwnProperty('unit'))
