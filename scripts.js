@@ -145,13 +145,12 @@ function drag(evt) {
 function dragging(evt) {
     if (draggingElement) {
         evt.preventDefault();
-        var regx = new RegExp('translate\((\d+), (\d+)\) scale\((\d+) (\d+)\)');
         var transform = draggingElement.getAttributeNS(null, 'transform');
-        var match = regx.exec(transform);
-        var x = parseFloat(match[0]) + evt.clientX;
-        var y = parseFloat(match[1]) + evt.clientY;
-        var scaleX = match[2];
-        var scaleY = match[3];
+        var match = /translate\((\d+), (\d+)\) scale\((\d+) (\d+)\)/gi.exec(transform);
+        var x = parseFloat(match[1]) + evt.clientX;
+        var y = parseFloat(match[2]) + evt.clientY;
+        var scaleX = match[3];
+        var scaleY = match[4];
         draggingElement.setAttributeNS(null, 'transform', `translate(${x}, ${y}) scale(${scaleX} ${scaleY})`);
     }
 }
