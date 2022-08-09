@@ -126,8 +126,10 @@ document.getElementById('btnDownloadSvg').onclick = function () {
     download(outputSvg.outerHTML, 'image/svg', 'FüHarke.svg');
 }
 
-function editName(text) {
+function editName(uuid) {
     let newName = prompt("Edit Name:", "Harry Potter");
+    var elements = document.querySelectorAll(`text[uuid='${uuid}']`);
+
 }
 
 function getSign(sign, unit) {
@@ -145,7 +147,7 @@ function getLine(ax, ay, bx, by) {
     return line;
 }
 
-function getText(uuid, text, x, y) {
+function getText(uuid, no, text, x, y) {
     var txt = document.createElement('text');
     txt.setAttribute('x', x);
     txt.setAttribute('y', y);
@@ -155,6 +157,7 @@ function getText(uuid, text, x, y) {
     txt.setAttribute('fill', 'black');
     txt.setAttribute('onclick', `editName('${uuid}')`);
     txt.setAttribute('uuid', uuid);
+    txt.setAttribute('no', no);
     txt.innerHTML = text;
     return txt;
 }
@@ -175,9 +178,11 @@ function drawRecursive(canvas, root, layer, x, y) {
             var name = root['name'];
             var offset = -32;
             var nameParts = name.split(', ');
+            var no = 0;
             for (let namePart in nameParts){
-                canvas.appendChild(getText(uuid, nameParts[namePart], x + signWidth / 2, y + signHeight + offset));
+                canvas.appendChild(getText(uuid, no, nameParts[namePart], x + signWidth / 2, y + signHeight + offset));
                 offset += 24;
+                no += 1;
             }
         }
     }
