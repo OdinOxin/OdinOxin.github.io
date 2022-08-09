@@ -143,7 +143,7 @@ function getText(text, x, y) {
     txt.setAttribute('font-family', 'Verdana');
     txt.setAttribute('text-anchor', 'middle');
     txt.setAttribute('fill', 'black');
-    txt.setAttribute('onclick', `editName(${text})`);
+    txt.setAttribute('onclick', `editName('${text}')`);
     txt.innerHTML = text;
     return txt;
 }
