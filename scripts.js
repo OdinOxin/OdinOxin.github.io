@@ -141,7 +141,7 @@ function getConfigElementByUuid(root, uuid) {
 }
 
 function editName(uuid) {
-    var item = getConfigElementByUuid(root, uuid);
+    var item = getConfigElementByUuid(config, uuid);
     let newName = prompt('Edit Name:', item['name']);
     if(newName == undefined)
         return;
