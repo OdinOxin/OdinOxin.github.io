@@ -145,17 +145,7 @@ function editName(uuid) {
     let newName = prompt('Edit Name:', item['name']);
     if(newName == undefined)
         return;
-    var elements = document.querySelectorAll(`text[uuid='${uuid}']`);
-    var x = undefined;
-    var y = undefined;
-    for (let idx = 0; idx < elements.length; idx += 1) {
-        if(x == undefined || x > elements[idx].getAttribute('x'))
-            x = elements[idx].getAttribute('x');
-        if(y == undefined || y > elements[idx].getAttribute('y'))
-            y = elements[idx].getAttribute('y');
-        elements[idx].parentNode.removeChild(elements[idx]);
-    }
-    appendText(outputSvg, uuid, newName, x, y + 32);
+    draw();
 }
 
 function getSign(sign, unit) {
@@ -187,15 +177,6 @@ function getText(uuid, text, x, y) {
     return txt;
 }
 
-function appendText(canvas, uuid, name, x, y) {
-    var offset = -32;
-    var nameParts = name.split(', ');
-    for (let namePart in nameParts){
-        canvas.appendChild(getText(uuid, nameParts[namePart], x, y + offset));
-        offset += 24;
-    }
-}
-
 function drawRecursive(canvas, root, layer, x, y) {
     var row = 0;
     var uuid = createUUID();
@@ -209,8 +190,14 @@ function drawRecursive(canvas, root, layer, x, y) {
         signSvg.setAttribute('uuid', uuid);
         signSvg.innerHTML = getSign(root['func'], unit);
         canvas.appendChild(signSvg);
-        if(root.hasOwnProperty('name'))
-            appendText(canvas, uuid, root['name'], x + signWidth / 2, y + signHeight)
+        if(root.hasOwnProperty('name')) {
+            var offset = -32;
+            var nameParts = root['name'].split(', ');
+            for (let namePart in nameParts){
+                canvas.appendChild(getText(uuid, nameParts[namePart], x + signWidth / 2, y + signHeight + offset));
+                offset += 24;
+            }
+        }
     }
     if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
         var col = 0;
