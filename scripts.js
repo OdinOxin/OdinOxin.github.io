@@ -145,6 +145,7 @@ function editName(uuid) {
     let newName = prompt('Edit Name:', item['name']);
     if(newName == undefined)
         return;
+    item['name'] = newName;
     draw();
 }
 
