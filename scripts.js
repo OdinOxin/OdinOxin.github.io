@@ -148,7 +148,7 @@ function editName(uuid) {
     var elements = document.querySelectorAll(`text[uuid='${uuid}']`);
     var x = undefined;
     var y = undefined;
-    for (let idx in elements) {
+    for (let idx = 0; idx < elements.length; idx += 1) {
         if(x == undefined || x > elements[idx].x)
             x = elements[idx].x;
         if(y == undefined || y > elements[idx].y)
