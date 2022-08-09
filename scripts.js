@@ -3,7 +3,7 @@ const signWidth = 256
 const signHeight = 256
 const lineGap = 50
 
-var draggingElement = undefined;
+var draggingElement = null;
 
 var config = {
     "unit": "TZ",
@@ -133,17 +133,26 @@ document.getElementById('btnDownloadSvg').onclick = function () {
 }
 
 function drag(evt) {
-    if (evt.target.classList.contains('draggable')) {
-        draggingElement = evt.target;
+    var element = evt.target;
+    while(element != null && !element.classList.contains('draggable') && element.id != 'outputSvg') {
+        element = element.parentElement;
     }
+    if (element == null || !element.classList.contains('draggable'))
+        return;
+    draggingElement = evt.target;
 }
 
 function dragging(evt) {
-
+    if (draggingElement) {
+        evt.preventDefault();
+        var x = parseFloat(draggingElement.getAttributeNS(null, "x"));
+        draggingElement.setAttributeNS(null, "x", x + 0.1);
+    }
 }
 
 function drop(evt) {
-
+    draggingElement = null;
+    draw();
 }
 
 function getConfigElementByUuid(root, uuid) {
