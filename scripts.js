@@ -132,7 +132,7 @@ function getConfigElementByUuid(root, uuid) {
     }
     if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
         for(let sub in root['sub']) {
-            var subResult = getConfigElementByUuid(sub, uuid);
+            var subResult = getConfigElementByUuid(root[sub], uuid);
             if(subResult != undefined)
                 return subResult;
         }
