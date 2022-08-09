@@ -34,11 +34,11 @@ var config = {
         },
         {
             "unit": "B",
-            "name": "Der Gruppenführer",
+            "name": "Der Gruppenführer, der Bergung",
             "func": "GrFü",
             "sub": [
                 {
-                    "name": "Der Truppführer",
+                    "name": "Der Truppführer, der Bergung",
                     "func": "TrFü",
                     "unit": "B",
                     "sub": null
