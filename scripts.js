@@ -154,8 +154,9 @@ function dragging(evt) {
 }
 
 function drop(evt) {
+    if(draggingElement)
+        draw();
     draggingElement = null;
-    draw();
 }
 
 function getConfigElementByUuid(root, uuid) {
