@@ -149,10 +149,10 @@ function editName(uuid) {
     var x = undefined;
     var y = undefined;
     for (let idx = 0; idx < elements.length; idx += 1) {
-        if(x == undefined || x > elements[idx].x)
-            x = elements[idx].x;
-        if(y == undefined || y > elements[idx].y)
-            y = elements[idx].y;
+        if(x == undefined || x > elements[idx].getAttribute('x'))
+            x = elements[idx].getAttribute('x');
+        if(y == undefined || y > elements[idx].getAttribute('y'))
+            y = elements[idx].getAttribute('y');
         elements[idx].parentNode.removeChild(elements[idx]);
     }
     appendText(outputSvg, uuid, newName, x, y + 32);
