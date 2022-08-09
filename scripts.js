@@ -3,6 +3,8 @@ const signWidth = 256
 const signHeight = 256
 const lineGap = 50
 
+var draggingElement = undefined;
+
 var config = {
     "unit": "TZ",
     "name": "Der Zugführer",
@@ -64,9 +66,16 @@ var config = {
     ]
 }
 
-usrInput = document.getElementById("usrInput");
-outputSvg = document.getElementById("outputSvg");
 iptConfig = document.getElementById('iptConfig');
+outputSvg = document.getElementById("outputSvg");
+
+document.addEventListener('DOMContentLoaded', function() {
+    iptConfig.addEventListener('change', configSelected, false);
+    outputSvg.addEventListener('mousedown', drag);
+    outputSvg.addEventListener('mousemove', dragging);
+    outputSvg.addEventListener('mouseup', drop);
+    outputSvg.addEventListener('mouseleave', drop);
+});
 
 function createUUID(){
     var dt = new Date().getTime();
@@ -104,9 +113,6 @@ function configSelected(evt) {
     }
     reader.readAsDataURL(evt.target.files[0]);
 }
-document.addEventListener('DOMContentLoaded', function() {
-    iptConfig.addEventListener('change', configSelected, false);
-});
 
 function download(content, type, filename) {
     var dataStr = `data:${type};charset=utf-8,` + encodeURIComponent(content);
@@ -126,18 +132,18 @@ document.getElementById('btnDownloadSvg').onclick = function () {
     download(outputSvg.outerHTML, 'image/svg', 'FüHarke.svg');
 }
 
-function allowDrop(ev) {
-    ev.preventDefault();
+function drag() {
+    if (evt.target.classList.contains('draggable')) {
+        draggingElement = evt.target;
+    }
 }
 
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
+function dragging(ev) {
+
 }
 
 function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    // ev.target.appendChild(document.getElementById(data));
+
 }
 
 function getConfigElementByUuid(root, uuid) {
@@ -174,8 +180,7 @@ function getSignSvg(root, uuid, unit, x, y) {
     var signSvg = document.createElement('g');
     signSvg.setAttribute('transform', `translate(${x}, ${y}) scale(1 1)`)
     signSvg.setAttribute('uuid', uuid);
-    signSvg.setAttribute('draggable', true);
-    signSvg.setAttribute('ondragstart', 'drag(event)');
+    signSvg.classList.add('draggable');
     signSvg.innerHTML = getSign(root['func'], unit);
     return signSvg;
 }
