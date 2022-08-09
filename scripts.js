@@ -147,11 +147,9 @@ function dragging(evt) {
         evt.preventDefault();
         var transform = draggingElement.getAttributeNS(null, 'transform');
         var match = /translate\((\d+), (\d+)\) scale\((\d+) (\d+)\)/gi.exec(transform);
-        var x = parseFloat(match[1]) + evt.clientX;
-        var y = parseFloat(match[2]) + evt.clientY;
         var scaleX = match[3];
         var scaleY = match[4];
-        draggingElement.setAttributeNS(null, 'transform', `translate(${x}, ${y}) scale(${scaleX} ${scaleY})`);
+        draggingElement.setAttributeNS(null, 'transform', `translate(${evt.clientX}, ${evt.clientY}) scale(${scaleX} ${scaleY})`);
     }
 }
 
