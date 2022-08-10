@@ -4,6 +4,7 @@ const signHeight = 256
 const lineGap = 50
 
 var draggingElement = null;
+var hoveringUuid = null;
 
 var config = {
     "unit": "TZ",
@@ -189,6 +190,15 @@ function editName(uuid) {
     draw();
 }
 
+function mouseOverSvg(uuid) {
+    hoveringUuid = uuid;
+}
+
+function mouseOutSvg(uuid) {
+    if(hoveringUuid == uuid)
+        hoveringUuid = null;
+}
+
 function getSign(sign, unit) {
     var req = new XMLHttpRequest();
     req.open('GET', `/signs/${sign}.svg`, false);
@@ -202,6 +212,8 @@ function getSignSvg(root, uuid, unit, x, y) {
     signSvg.setAttribute('uuid', uuid);
     signSvg.classList.add('draggable');
     signSvg.innerHTML = getSign(root['func'], unit);
+    signSvg.childNodes[0].setAttribute('onmouseover', `mouseOverSvg(${uuid})`);
+    signSvg.childNodes[0].setAttribute('onmouseout', `mouseOutSvg(${uuid})`);
     return signSvg;
 }
 
