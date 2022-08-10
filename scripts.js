@@ -140,16 +140,21 @@ function drag(evt) {
     if (element == null || !element.classList.contains('draggable'))
         return;
     draggingElement = element;
+
+    var transform = draggingElement.getAttributeNS(null, 'transform');
+    var match = /translate\((\d+), (\d+)\) scale\((\d+) (\d+)\)/gi.exec(transform);
+    draggingElement.draggingInfo = {
+        offsetX: match[1] - evt.clientX,
+        offsetY: match[2] - evt.clientY,
+        scaleX: match[3],
+        scaleY: match[4],
+    };
 }
 
 function dragging(evt) {
     if (draggingElement) {
         evt.preventDefault();
-        var transform = draggingElement.getAttributeNS(null, 'transform');
-        var match = /translate\((\d+), (\d+)\) scale\((\d+) (\d+)\)/gi.exec(transform);
-        var scaleX = match[3];
-        var scaleY = match[4];
-        draggingElement.setAttributeNS(null, 'transform', `translate(${evt.clientX}, ${evt.clientY}) scale(${scaleX} ${scaleY})`);
+        draggingElement.setAttributeNS(null, 'transform', `translate(${draggingElement.draggingInfo.offsetX - evt.clientX}, ${draggingElement.draggingInfo.offsetY - evt.clientY}) scale(${draggingElement.draggingInfo.scaleX} ${draggingElement.draggingInfo.scaleY})`);
     }
 }
 
