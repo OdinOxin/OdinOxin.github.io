@@ -238,7 +238,7 @@ function drawRecursive(canvas, root, layer, x, y) {
             var offset = -32;
             var nameParts = root['name'].split(', ');
             for (let namePart in nameParts){
-                itemBox.appendChild(getText(uuid, nameParts[namePart], x + signWidth / 2, y + signHeight + offset));
+                itemBox.appendChild(getText(uuid, nameParts[namePart], signWidth / 2, signHeight + offset));
                 offset += 24;
             }
         }
