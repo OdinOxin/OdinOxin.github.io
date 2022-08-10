@@ -154,7 +154,7 @@ function drag(evt) {
 function dragging(evt) {
     if (draggingElement) {
         evt.preventDefault();
-        draggingElement.setAttributeNS(null, 'transform', `translate(${draggingElement.draggingInfo.offsetX - evt.clientX}, ${draggingElement.draggingInfo.offsetY - evt.clientY}) scale(${draggingElement.draggingInfo.scaleX} ${draggingElement.draggingInfo.scaleY})`);
+        draggingElement.setAttributeNS(null, 'transform', `translate(${evt.clientX + draggingElement.draggingInfo.offsetX}, ${evt.clientY + draggingElement.draggingInfo.offsetY}) scale(${draggingElement.draggingInfo.scaleX} ${draggingElement.draggingInfo.scaleY})`);
     }
 }
 
