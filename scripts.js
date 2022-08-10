@@ -164,6 +164,9 @@ function dragging(evt) {
 function drop(evt) {
     if(draggingElement)
         draw();
+    if(hoveringUuid != null) {
+        var target = getConfigElementByUuid(config, uuid);
+    }
     draggingElement = null;
 }
 
@@ -212,8 +215,8 @@ function getSignSvg(root, uuid, unit, x, y) {
     signSvg.setAttribute('uuid', uuid);
     signSvg.classList.add('draggable');
     signSvg.innerHTML = getSign(root['func'], unit);
-    signSvg.childNodes[0].setAttribute('onmouseover', `mouseOverSvg(${uuid})`);
-    signSvg.childNodes[0].setAttribute('onmouseout', `mouseOutSvg(${uuid})`);
+    signSvg.childNodes[0].setAttribute('onmouseover', `mouseOverSvg('${uuid}')`);
+    signSvg.childNodes[0].setAttribute('onmouseout', `mouseOutSvg('${uuid}')`);
     return signSvg;
 }
 
