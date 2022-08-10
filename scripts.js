@@ -233,15 +233,16 @@ function drawRecursive(canvas, root, layer, x, y) {
         var unit = '';
         if (root.hasOwnProperty('unit'))
             unit = root['unit']
-        canvas.appendChild(getSignSvg(root, uuid, unit, x, y));
+        var itemBox = getSignSvg(root, uuid, unit, x, y);
         if(root.hasOwnProperty('name')) {
             var offset = -32;
             var nameParts = root['name'].split(', ');
             for (let namePart in nameParts){
-                canvas.appendChild(getText(uuid, nameParts[namePart], x + signWidth / 2, y + signHeight + offset));
+                itemBox.appendChild(getText(uuid, nameParts[namePart], x + signWidth / 2, y + signHeight + offset));
                 offset += 24;
             }
         }
+        canvas.appendChild(itemBox);
     }
     if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
         var col = 0;
