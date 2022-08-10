@@ -134,6 +134,8 @@ document.getElementById('btnDownloadSvg').onclick = function () {
 
 function drag(evt) {
     var element = evt.target;
+    if(element.nodeName == 'text' && element.getAttributeNS(null, 'uuid') != null)
+        return;
     while(element != null && !element.classList.contains('draggable') && element.id != 'outputSvg') {
         element = element.parentElement;
     }
