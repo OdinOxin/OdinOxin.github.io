@@ -164,9 +164,11 @@ function dragging(evt) {
 
 function drop(evt) {
     if(hoveringUuid != null) {
-        var target = getConfigElementByUuid(config, hoveringUuid);
+        var source = getConfigElementParentByUuid(config, draggingElement.draggingInfo.uuid);
         var subject = getConfigElementByUuid(config, draggingElement.draggingInfo.uuid);
-        if (target != null) {
+        var target = getConfigElementByUuid(config, hoveringUuid);
+        if (target != null && source != null) {
+            source.sub.pop(subject);
             if (target.sub == null)
                 target.sub = [ subject ];
             else
@@ -189,7 +191,21 @@ function getConfigElementByUuid(root, uuid) {
                 return subResult;
         }
     }
-    return undefined;
+    return null;
+}
+
+function getConfigElementParentByUuid(root, uuid) {
+    if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
+        for(let idx in root['sub']) {
+            if (root['sub'][idx].hasOwnProperty('uuid') && root['sub'][idx]['uuid'] == uuid){
+                return root;
+            }
+            var subResult = getConfigElementParentByUuid(root['sub'][idx], uuid);
+            if(subResult != null)
+                return subResult;
+        }
+    }
+    return null;
 }
 
 function editName(uuid) {
