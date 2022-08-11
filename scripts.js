@@ -196,11 +196,15 @@ function editName(uuid) {
 
 function mouseOverSvg(uuid) {
     hoveringUuid = uuid;
+    print('over: ' + hoveringUuid);
 }
 
 function mouseOutSvg(uuid) {
     if(hoveringUuid == uuid)
+    {
         hoveringUuid = null;
+        print('out: ' + uuid);
+    }
 }
 
 function getSign(sign, unit) {
