@@ -162,12 +162,12 @@ function dragging(evt) {
 }
 
 function drop(evt) {
-    if(draggingElement)
-        draw();
     if(hoveringUuid != null) {
         var target = getConfigElementByUuid(config, hoveringUuid);
         // target.sub.push(draggingElement);
     }
+    if(draggingElement)
+        draw();
     draggingElement = null;
 }
 
