@@ -163,7 +163,7 @@ function dragging(evt) {
 }
 
 function drop(evt) {
-    draggedElement = draggingElement;
+    var draggedElement = draggingElement;
     draggingElement = null;
     if(hoveringUuid != null) {
         var source = getConfigElementParentByUuid(config, draggedElement.draggingInfo.uuid);
