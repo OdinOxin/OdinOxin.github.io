@@ -168,7 +168,7 @@ function drop(evt) {
         var subject = getConfigElementByUuid(config, draggingElement.draggingInfo.uuid);
         var target = getConfigElementByUuid(config, hoveringUuid);
         if (target != null && source != null) {
-            source.sub.pop(subject);
+            source.sub = source.sub.filter(item => item != subject);
             if (target.sub == null)
                 target.sub = [ subject ];
             else
