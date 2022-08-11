@@ -167,6 +167,10 @@ function drop(evt) {
         var source = getConfigElementParentByUuid(config, draggingElement.draggingInfo.uuid);
         var subject = getConfigElementByUuid(config, draggingElement.draggingInfo.uuid);
         var target = getConfigElementByUuid(config, hoveringUuid);
+
+        if(isAncestorOf(target, subject))
+            return;
+
         if (target != null && source != null) {
             source.sub = source.sub.filter(item => item != subject);
             if (target.sub == null)
@@ -178,6 +182,19 @@ function drop(evt) {
     if(draggingElement)
         draw();
     draggingElement = null;
+}
+
+function isAncestorOf(item, presumedDescendant) {
+    if(presumedDescendant.hasOwnProperty('sub') && Array.isArray(presumedDescendant['sub'])){
+        for(let idx in presumedDescendant['sub']) {
+            if (presumedDescendant['sub'][idx] == item)
+                return true;
+            var subResult = isAncestorOf(item, presumedDescendant['sub'][idx]);
+            if(subResult)
+                return subResult;
+        }
+    }
+    return false;
 }
 
 function getConfigElementByUuid(root, uuid) {
