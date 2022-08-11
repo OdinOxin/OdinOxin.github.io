@@ -135,7 +135,8 @@ document.getElementById('btnDownloadSvg').onclick = function () {
 
 function drag(evt) {
     var element = evt.target;
-    if(element.nodeName == 'text' && element.getAttributeNS(null, 'uuid') != null)
+    var uuid = element.getAttributeNS(null, 'uuid');
+    if(element.nodeName == 'text' && uuid != null)
         return;
     while(element != null && !element.classList.contains('draggable') && element.id != 'outputSvg') {
         element = element.parentElement;
@@ -151,6 +152,7 @@ function drag(evt) {
         offsetY: match[2] - evt.clientY,
         scaleX: match[3],
         scaleY: match[4],
+        uuid: uuid,
     };
 }
 
@@ -164,7 +166,9 @@ function dragging(evt) {
 function drop(evt) {
     if(hoveringUuid != null) {
         var target = getConfigElementByUuid(config, hoveringUuid);
-        // target.sub.push(draggingElement);
+        var subject = getConfigElementByUuid(config, draggingElement.uuid);
+        if (target != null)
+            target.sub.push(subject);
     }
     if(draggingElement)
         draw();
