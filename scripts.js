@@ -145,7 +145,7 @@ function drag(evt) {
     draggingElement = element;
 
     var canvas = draggingElement.parentElement;
-    canvas.childNodes = canvas.childNodes.filter(item => item != draggingElement);
+    canvas.childNodes = Array.from(canvas.childNodes).filter(item => item != draggingElement);
     canvas.childNodes.unshift(draggingElement);
 
     var transform = draggingElement.getAttributeNS(null, 'transform');
