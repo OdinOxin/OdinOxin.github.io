@@ -196,14 +196,14 @@ function editName(uuid) {
 
 function mouseOverSvg(uuid) {
     hoveringUuid = uuid;
-    print('over: ' + hoveringUuid);
+    console.log('over: ' + hoveringUuid);
 }
 
 function mouseOutSvg(uuid) {
     if(hoveringUuid == uuid)
     {
         hoveringUuid = null;
-        print('out: ' + uuid);
+        console.log('out: ' + uuid);
     }
 }
 
