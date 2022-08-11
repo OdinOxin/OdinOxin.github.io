@@ -145,7 +145,9 @@ function drag(evt) {
     draggingElement = element;
 
     var canvas = draggingElement.parentElement;
-    canvas.childNodes = Array.from(canvas.childNodes).filter(item => item != draggingElement).unshift(draggingElement);
+    var canvasChildren = Array.from(canvas.childNodes).filter(item => item != draggingElement);
+    canvasChildren.unshift(draggingElement);
+    canvas.childNodes = canvasChildren;
 
     var transform = draggingElement.getAttributeNS(null, 'transform');
     var match = /translate\((\d+), (\d+)\) scale\((\d+) (\d+)\)/gi.exec(transform);
