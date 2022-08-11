@@ -163,9 +163,11 @@ function dragging(evt) {
 }
 
 function drop(evt) {
+    draggedElement = draggingElement;
+    draggingElement = null;
     if(hoveringUuid != null) {
-        var source = getConfigElementParentByUuid(config, draggingElement.draggingInfo.uuid);
-        var subject = getConfigElementByUuid(config, draggingElement.draggingInfo.uuid);
+        var source = getConfigElementParentByUuid(config, draggedElement.draggingInfo.uuid);
+        var subject = getConfigElementByUuid(config, draggedElement.draggingInfo.uuid);
         var target = getConfigElementByUuid(config, hoveringUuid);
 
         if(subject == target || isAncestorOf(target, subject))
@@ -179,9 +181,8 @@ function drop(evt) {
                 target.sub.push(subject);
         }
     }
-    if(draggingElement)
+    if(draggedElement)
         draw();
-    draggingElement = null;
 }
 
 function isAncestorOf(item, presumedDescendant) {
