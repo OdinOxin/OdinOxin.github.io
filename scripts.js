@@ -277,6 +277,7 @@ function getSignSvg(root, uuid, unit, x, y) {
     signSvg.setAttribute('uuid', uuid);
     signSvg.classList.add('draggable');
     signSvg.innerHTML = getSign(root['func'], unit);
+    signSvg.childNodes[0].setAttribute('touch-action', 'none');
     signSvg.childNodes[0].setAttribute('onpointerover', `pointerOverSvg('${uuid}')`);
     signSvg.childNodes[0].setAttribute('onpointerout', `pointerOutSvg('${uuid}')`);
     return signSvg;
