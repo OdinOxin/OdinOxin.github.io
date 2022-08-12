@@ -247,12 +247,12 @@ function editName(uuid) {
     draw();
 }
 
-function mouseOverSvg(uuid) {
+function pointerOverSvg(uuid) {
     hoveringUuid = uuid;
     console.log('over: ' + hoveringUuid);
 }
 
-function mouseOutSvg(uuid) {
+function pointerOutSvg(uuid) {
     if(hoveringUuid == uuid)
     {
         hoveringUuid = null;
@@ -273,8 +273,8 @@ function getSignSvg(root, uuid, unit, x, y) {
     signSvg.setAttribute('uuid', uuid);
     signSvg.classList.add('draggable');
     signSvg.innerHTML = getSign(root['func'], unit);
-    signSvg.childNodes[0].setAttribute('onmouseover', `mouseOverSvg('${uuid}')`);
-    signSvg.childNodes[0].setAttribute('onmouseout', `mouseOutSvg('${uuid}')`);
+    signSvg.childNodes[0].setAttribute('pointerover', `pointerOverSvg('${uuid}')`);
+    signSvg.childNodes[0].setAttribute('pointerout', `pointerOutSvg('${uuid}')`);
     return signSvg;
 }
 
