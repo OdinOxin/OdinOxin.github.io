@@ -155,6 +155,10 @@ function drag(evt) {
 
     var transform = draggingElement.getAttributeNS(null, 'transform');
     var match = /translate\((\d+), (\d+)\) scale\((\d+) (\d+)\)/gi.exec(transform);
+    if(match == null) {
+        draggingElement = null;
+        return;
+    }
     draggingElement.draggingInfo = {
         offsetX: match[1] - touchpos.clientX,
         offsetY: match[2] - touchpos.clientY,
