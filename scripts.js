@@ -166,6 +166,9 @@ function drag(evt) {
 function dragging(evt) {
     if (draggingElement) {
         evt.preventDefault();
+        var touchpos = evt;
+        if(touchpos.clientX == undefined)
+            touchpos = evt.targetTouches[0];
         draggingElement.setAttributeNS(null, 'transform', `translate(${evt.clientX + draggingElement.draggingInfo.offsetX}, ${evt.clientY + draggingElement.draggingInfo.offsetY}) scale(${draggingElement.draggingInfo.scaleX} ${draggingElement.draggingInfo.scaleY})`);
     }
 }
