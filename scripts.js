@@ -152,11 +152,15 @@ function drag(evt) {
     canvasChildren.unshift(draggingElement);
     canvas.childNodes = canvasChildren;
 
+    var touchpos = evt;
+    if(touchpos.clientX == undefined)
+        touchpos = evt.targetTouches[0];
+
     var transform = draggingElement.getAttributeNS(null, 'transform');
     var match = /translate\((\d+), (\d+)\) scale\((\d+) (\d+)\)/gi.exec(transform);
     draggingElement.draggingInfo = {
-        offsetX: match[1] - evt.clientX,
-        offsetY: match[2] - evt.clientY,
+        offsetX: match[1] - touchpos.clientX,
+        offsetY: match[2] - touchpos.clientY,
         scaleX: match[3],
         scaleY: match[4],
         uuid: draggingElement.getAttributeNS(null, 'uuid'),
