@@ -73,9 +73,12 @@ outputSvg = document.getElementById("outputSvg");
 document.addEventListener('DOMContentLoaded', function() {
     iptConfig.addEventListener('change', configSelected, false);
     outputSvg.addEventListener('mousedown', drag);
+    outputSvg.addEventListener('touchstart', drag);
     outputSvg.addEventListener('mousemove', dragging);
+    outputSvg.addEventListener('touchmove', dragging);
     outputSvg.addEventListener('mouseup', drop);
     outputSvg.addEventListener('mouseleave', drop);
+    outputSvg.addEventListener('touchend', drop);
 });
 
 function createUUID(){
