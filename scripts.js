@@ -1,4 +1,4 @@
-const maxColumns = 7
+const maxColumns = 20
 const signWidth = 256
 const signHeight = 256
 const lineGap = 50
@@ -56,24 +56,88 @@ var BGr = {
             "name": "Der Truppführer, der Bergung",
             "func": "TrFü",
             "txt": "B",
-            "sub": null
+            "sub": null,
         },
         {
             "name": "B-Helfer 1",
-            "func": "FaHe"
+            "func": "FaHe",
         },
         {
             "name": "B-Helfer 2",
-            "func": "FaHe"
+            "func": "FaHe",
         },
         {
             "name": "B-Helfer 3",
-            "func": "FaHe"
+            "func": "FaHe",
         },
         {
             "name": "B-Helfer 4",
-            "func": "FaHe"
+            "func": "FaHe",
+        },
+        {
+            "name": "B-Helfer 5",
+            "func": "FaHe",
+        },
+        {
+            "name": "B-Helfer 6",
+            "func": "FaHe",
+        },
+        {
+            "name": "B-Helfer 7",
+            "func": "FaHe",
+            "txt": "KF",
+        },
+    ]
+};
+
+var FGrN = {
+    "func": "Unit",
+    "txt": "N",
+    "org": "THW",
+    "attr": "group",
+    "with": [
+        {
+            "name": "Der Gruppenführer, der N",
+            "func": "GrFü",
+            "txt": "N",
         }
+    ],
+    "sub": [
+        {
+            "name": "Der Truppführer, der N",
+            "func": "TrFü",
+            "txt": "N",
+            "sub": null,
+        },
+        {
+            "name": "N-Helfer 1",
+            "func": "FaHe",
+        },
+        {
+            "name": "N-Helfer 2",
+            "func": "FaHe",
+        },
+        {
+            "name": "N-Helfer 3",
+            "func": "FaHe",
+        },
+        {
+            "name": "N-Helfer 4",
+            "func": "FaHe",
+        },
+        {
+            "name": "N-Helfer 5",
+            "func": "FaHe",
+        },
+        {
+            "name": "N-Helfer 6",
+            "func": "FaHe",
+        },
+        {
+            "name": "N-Helfer 7",
+            "func": "FaHe",
+            "txt": "KF",
+        },
     ]
 };
 
@@ -92,6 +156,7 @@ var TZ = {
     "sub": [
         ZTr,
         BGr,
+        FGrN,
     ],
 };
 
@@ -392,7 +457,7 @@ function drawRecursive(canvas, root, layer, x, y) {
         var leafs = root['sub'].filter(item => !item.hasOwnProperty('sub') || !Array.isArray(item["sub"]) || !item["sub"].length);
         for(let leaf in leafs){
             colSub += 1;
-            if((colSub + colWith + layer) % 7 == 0) {
+            if((colSub + colWith + layer) % maxColumns == 0) {
                 colSub = 1;
                 rowSub += 1;
             }
