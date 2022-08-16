@@ -498,7 +498,7 @@ function drawRecursive(canvas, root, layer, x, y) {
             canvas.appendChild(getLine(x + GAP + colWith * signWidth, y + signHeight / 2, x + GAP + colWith * signWidth, y + rowLineEnd * signHeight + signHeight / 2));
         }
     }
-    return (rowSub, colSub + colWith + layer);
+    return rowSub;
 }
 
 function draw() {
