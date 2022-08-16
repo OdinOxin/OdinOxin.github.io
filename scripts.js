@@ -67,6 +67,16 @@ var config = {
     ]
 }
 
+config = {
+    "func": "Unit",
+    "txt": "TZ",
+    "org": "THW",
+    "attr": "platoon,leading",
+    "sub": [
+        config
+    ]
+}
+
 iptConfig = document.getElementById('iptConfig');
 outputSvg = document.getElementById("outputSvg");
 
@@ -253,11 +263,21 @@ function mouseOutSvg(uuid) {
     }
 }
 
-function getSign(sign, unit) {
+function getSign(sign, txt, spez, org, attrTxt) {
     var req = new XMLHttpRequest();
     req.open('GET', `/signs/${sign}.svg`, false);
     req.send();
-    return req.responseText.replace('{{UNIT}}', unit)
+    var svg = req.responseText
+        .replace('{{TXT}}', txt)
+        .replace('{{SPEZ}}', spez)
+        .replace('{{ORG}}', org);
+    attrTxt.split(',').forEach(attr => {
+        var attrFormatted = attr.trim().toUpperCase();
+        svg = svg.replace(`{{${attrFormatted}`)
+            .replace(`${attrFormatted}}}`);
+    });
+    return svg.replace(/{{\w+\s/g, '<!--')
+        .replace(/\s\w+}}/g, '-->');
 }
 
 function getSignSvg(root, uuid, unit, x, y) {
