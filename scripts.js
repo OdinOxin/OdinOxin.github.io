@@ -377,41 +377,41 @@ function drawSign(canvas, root, x, y) {
 }
 
 function drawRecursive(canvas, root, layer, x, y) {
-    var rowWith = 0;
     var rowSub = 0;
-    var col = 0;
+    var colSub = 0;
+    var colWith = 0;
     drawSign(canvas, root, x, y);
     if(root.hasOwnProperty('with') && Array.isArray(root['with'])){
         root['with'].forEach(item => {
-            drawSign(canvas, item, x + col * signWidth, y);
-            col += 1;
+            colWith += 1;
+            drawSign(canvas, item, x + colWith * signWidth, y);
         });
     }
     if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
         var leafs = root['sub'].filter(item => !item.hasOwnProperty('sub') || !Array.isArray(item["sub"]) || !item["sub"].length);
         for(let leaf in leafs){
-            col += 1;
-            if((col + layer) % 7 == 0) {
-                col = 1;
+            colSub += 1;
+            if((colSub + colWith + layer) % 7 == 0) {
+                colSub = 1;
                 rowSub += 1;
             }
-            drawRecursive(canvas, leafs[leaf], layer + 1, x + col * signWidth, y + rowSub * signHeight);
+            drawRecursive(canvas, leafs[leaf], layer + 1, x + (colWith + colSub) * signWidth, y + rowSub * signHeight);
         }
         if(leafs.length > 0)
             rowSub += 1;
         var subTrees = root["sub"].filter(item => item.hasOwnProperty('sub') && Array.isArray(item["sub"]) && item["sub"].length > 0);
         if(subTrees.length > 0) {
-            canvas.appendChild(getLine(x + signWidth - lineGap, y + signHeight / 2, x + signWidth, y + signHeight / 2));
+            canvas.appendChild(getLine(x + colWith * signWidth - lineGap, y + signHeight / 2, x + colWith * signWidth, y + signHeight / 2));
             var rowLineEnd = rowSub;
             for(let subTree in subTrees) {
-                canvas.appendChild(getLine(x + signWidth, y + rowSub * signHeight + signHeight / 2, x + signWidth + lineGap, y + rowSub * signHeight + signHeight / 2));
+                canvas.appendChild(getLine(x + colWith * signWidth, y + rowSub * signHeight + signHeight / 2, x + colWith * signWidth + lineGap, y + rowSub * signHeight + signHeight / 2));
                 rowLineEnd = rowSub;
                 rowSub += drawRecursive(canvas, subTrees[subTree], layer + 1, x + signWidth, y + rowSub * signHeight);
             }
-            canvas.appendChild(getLine(x + signWidth, y + signHeight / 2, x + signWidth, y + rowLineEnd * signHeight + signHeight / 2));
+            canvas.appendChild(getLine(x + colWith * signWidth, y + signHeight / 2, x + colWith * signWidth, y + rowLineEnd * signHeight + signHeight / 2));
         }
     }
-    return Math.max(rowWith, rowSub);
+    return rowSub;
 }
 
 function draw() {
