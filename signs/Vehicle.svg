@@ -14,6 +14,6 @@
 	<ellipse cx="128" cy="210" rx="10" ry="10" stroke="#000000" fill="none" stroke-width="5" />
 	OFFROAD}}
 
-	<text style="font-family: 'Lubalin Graph', 'Roboto Slab'; font-weight: normal; text-anchor: middle; font-size: 48px; " fill="#FFFFFF" x="128" y="145">{{TXT}}</text>
-	<text style="font-family: 'Lubalin Graph', 'Roboto Slab'; font-weight: normal; text-anchor: end;" fill="#FFFFFF" x="236" y="180">{{ORG}}</text>
+	<text style="font-family: 'Lubalin Graph', 'Roboto Slab'; font-weight: bold; text-anchor: middle; font-size: 48px; " fill="#FFFFFF" x="128" y="145">{{TXT}}</text>
+	<text style="font-family: 'Lubalin Graph', 'Roboto Slab'; font-weight: bold; text-anchor: end;" fill="#FFFFFF" x="236" y="180">{{ORG}}</text>
 </svg>
