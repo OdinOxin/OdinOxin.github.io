@@ -1,4 +1,4 @@
-const maxColumns = 20
+const maxColumns = 9
 const subColumns = 5
 const signWidth = 256
 const signHeight = 256
