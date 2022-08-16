@@ -382,9 +382,10 @@ function drawRecursive(canvas, root, layer, x, y) {
     var colWith = 0;
     drawSign(canvas, root, x, y);
     if(root.hasOwnProperty('with') && Array.isArray(root['with'])){
+        colWith += 1;
         root['with'].forEach(item => {
-            colWith += 1;
             drawSign(canvas, item, x + colWith * signWidth, y);
+            colWith += 1;
         });
     }
     if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
