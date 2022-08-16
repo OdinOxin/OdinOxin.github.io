@@ -1,4 +1,5 @@
 const maxColumns = 20
+const subColumns = 4
 const signWidth = 256
 const signHeight = 256
 const lineGap = 50
@@ -457,7 +458,11 @@ function drawRecursive(canvas, root, layer, x, y) {
         var leafs = root['sub'].filter(item => !item.hasOwnProperty('sub') || !Array.isArray(item["sub"]) || !item["sub"].length);
         for(let leaf in leafs){
             colSub += 1;
-            if((colSub + colWith + layer) % maxColumns == 0) {
+            if(colSub % subColumns == 0) {
+                colSub = 1;
+                rowSub += 1;
+            }
+            else if((colSub + colWith + layer) % maxColumns == 0) {
                 colSub = 1;
                 rowSub += 1;
             }
