@@ -407,7 +407,7 @@ function drawRecursive(canvas, root, layer, x, y) {
             for(let subTree in subTrees) {
                 canvas.appendChild(getLine(x + colWith * signWidth, y + rowSub * signHeight + signHeight / 2, x + colWith * signWidth + lineGap, y + rowSub * signHeight + signHeight / 2));
                 rowLineEnd = rowSub;
-                rowSub += drawRecursive(canvas, subTrees[subTree], layer + 1, x + signWidth, y + rowSub * signHeight);
+                rowSub += drawRecursive(canvas, subTrees[subTree], layer + 1, x + colWith * signWidth, y + rowSub * signHeight);
             }
             canvas.appendChild(getLine(x + colWith * signWidth, y + signHeight / 2, x + colWith * signWidth, y + rowLineEnd * signHeight + signHeight / 2));
         }
