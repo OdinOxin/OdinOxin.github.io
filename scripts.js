@@ -3,6 +3,7 @@ const subColumns = 5
 const signWidth = 256
 const signHeight = 256
 const GAP = 50
+const LINESIZE = 24
 
 var draggingElement = null;
 var hoveringUuid = null;
@@ -497,7 +498,7 @@ function drawRecursive(canvas, root, layer, x, y) {
             canvas.appendChild(getLine(x + GAP + colWith * signWidth, y + signHeight / 2, x + GAP + colWith * signWidth, y + rowLineEnd * signHeight + signHeight / 2));
         }
     }
-    return rowSub;
+    return (rowSub, colSub + colWith + layer);
 }
 
 function draw() {
@@ -507,14 +508,14 @@ function draw() {
 
     // Draw Border
     canvas.appendChild(getLine(0, 0, columns * signWidth, 0));
-    canvas.appendChild(getLine(columns * signWidth, 0, columns * signWidth, rows * signHeight));
-    canvas.appendChild(getLine(columns * signWidth, rows * signHeight, 0, rows * signHeight));
-    canvas.appendChild(getLine(0, rows * signHeight, 0, 0));
+    canvas.appendChild(getLine(columns * signWidth, 0, columns * signWidth, rows * signHeight + LINESIZE));
+    canvas.appendChild(getLine(columns * signWidth, rows * signHeight + LINESIZE, 0, rows * signHeight + LINESIZE));
+    canvas.appendChild(getLine(0, rows * signHeight + LINESIZE, 0, 0));
 
     // Output
     outputSvg.innerHTML = canvas.innerHTML;
     outputSvg.setAttribute('width', columns * signWidth);
-    outputSvg.setAttribute('height', rows * signHeight);
+    outputSvg.setAttribute('height', rows * signHeight + LINESIZE);
 }
 
 draw();
