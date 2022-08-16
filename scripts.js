@@ -71,7 +71,7 @@ config = {
     "func": "Unit",
     "txt": "TZ",
     "org": "THW",
-    "attr": "platoon,leading",
+    "attr": "platoon",
     "sub": [
         config
     ]
