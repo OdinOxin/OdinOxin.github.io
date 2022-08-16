@@ -7,12 +7,12 @@ var draggingElement = null;
 var hoveringUuid = null;
 
 var config = {
-    "unit": "TZ",
+    "txt": "TZ",
     "name": "Der Zugführer",
     "func": "ZFü",
     "sub": [
         {
-            "unit": "TZ",
+            "txt": "TZ",
             "name": "Der Zugtruppführer",
             "func": "ZTrFü",
             "sub": [
@@ -31,19 +31,19 @@ var config = {
                 {
                     "name": "ZTr-Helfer 4",
                     "func": "FaHe",
-                    "unit": "KF"
+                    "txt": "KF"
                 }
             ]
         },
         {
-            "unit": "B",
+            "txt": "B",
             "name": "Der Gruppenführer, der Bergung",
             "func": "GrFü",
             "sub": [
                 {
                     "name": "Der Truppführer, der Bergung",
                     "func": "TrFü",
-                    "unit": "B",
+                    "txt": "B",
                     "sub": null
                 },
                 {
@@ -291,12 +291,26 @@ function getSign(sign, txt, spez, org, attrTxt) {
         .replace(/\s\w+}}/g, '-->');
 }
 
-function getSignSvg(root, uuid, unit, x, y) {
+function getSignSvg(root, uuid, x, y) {
     var signSvg = document.createElement('g');
     signSvg.setAttribute('transform', `translate(${x}, ${y}) scale(1 1)`)
     signSvg.setAttribute('uuid', uuid);
     signSvg.classList.add('draggable');
-    signSvg.innerHTML = getSign(root['func'], unit);
+
+    var txt = '';
+    if (root.hasOwnProperty('txt'))
+        txt = root['txt'];
+    var spez = '';
+    if (root.hasOwnProperty('spez'))
+        spez = root['spez'];
+    var org = '';
+    if (root.hasOwnProperty('org'))
+        org = root['org'];
+    var attr = '';
+    if (root.hasOwnProperty('attr'))
+        attr = root['attr'];
+
+    signSvg.innerHTML = getSign(root['func'], txt, spez, org, attr);
     signSvg.childNodes[0].setAttribute('touch-action', 'none');
     signSvg.childNodes[0].setAttribute('onpointerover', `pointerOverSvg('${uuid}')`);
     signSvg.childNodes[0].setAttribute('onpointerout', `pointerOutSvg('${uuid}')`);
@@ -329,11 +343,8 @@ function drawRecursive(canvas, root, layer, x, y) {
     var row = 0;
     var uuid = createUUID();
     root['uuid'] = uuid;
-    if (root.hasOwnProperty('func')){
-        var unit = '';
-        if (root.hasOwnProperty('unit'))
-            unit = root['unit']
-        var itemBox = getSignSvg(root, uuid, unit, x, y);
+    if (root.hasOwnProperty('func')) {
+        var itemBox = getSignSvg(root, uuid, x, y);
         if(root.hasOwnProperty('name')) {
             var offset = -32;
             var nameParts = root['name'].split(', ');
