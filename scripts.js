@@ -1,5 +1,5 @@
 const maxColumns = 20
-const subColumns = 4
+const subColumns = 5
 const signWidth = 256
 const signHeight = 256
 const lineGap = 50
