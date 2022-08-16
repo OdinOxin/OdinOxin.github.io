@@ -379,16 +379,15 @@ function drawSign(canvas, root, x, y) {
 function drawRecursive(canvas, root, layer, x, y) {
     var rowWith = 0;
     var rowSub = 0;
+    var col = 0;
     drawSign(canvas, root, x, y);
     if(root.hasOwnProperty('with') && Array.isArray(root['with'])){
-        rowWith += 1;
         root['with'].forEach(item => {
-            drawSign(canvas, item, x, y + rowWith * signHeight);
-            rowWith += 1;
+            drawSign(canvas, item, x + col * signWidth, y);
+            col += 1;
         });
     }
     if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
-        var col = 0;
         var leafs = root['sub'].filter(item => !item.hasOwnProperty('sub') || !Array.isArray(item["sub"]) || !item["sub"].length);
         for(let leaf in leafs){
             col += 1;
