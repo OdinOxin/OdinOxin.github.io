@@ -82,10 +82,10 @@ outputSvg = document.getElementById("outputSvg");
 
 document.addEventListener('DOMContentLoaded', function() {
     iptConfig.addEventListener('change', configSelected, false);
-    outputSvg.addEventListener('mousedown', drag);
-    outputSvg.addEventListener('mousemove', dragging);
-    outputSvg.addEventListener('mouseup', drop);
-    outputSvg.addEventListener('mouseleave', drop);
+    outputSvg.addEventListener('pointerdown', drag);
+    outputSvg.addEventListener('pointermove', dragging);
+    outputSvg.addEventListener('pointerup', drop);
+    outputSvg.addEventListener('pointercancel', drop);
 });
 
 function createUUID(){
@@ -159,11 +159,19 @@ function drag(evt) {
     canvasChildren.unshift(draggingElement);
     canvas.childNodes = canvasChildren;
 
+    var touchpos = evt;
+    if(touchpos.clientX == undefined)
+        touchpos = evt.targetTouches[0];
+
     var transform = draggingElement.getAttributeNS(null, 'transform');
     var match = /translate\((\d+), (\d+)\) scale\((\d+) (\d+)\)/gi.exec(transform);
+    if(match == null) {
+        draggingElement = null;
+        return;
+    }
     draggingElement.draggingInfo = {
-        offsetX: match[1] - evt.clientX,
-        offsetY: match[2] - evt.clientY,
+        offsetX: match[1] - touchpos.clientX,
+        offsetY: match[2] - touchpos.clientY,
         scaleX: match[3],
         scaleY: match[4],
         uuid: draggingElement.getAttributeNS(null, 'uuid'),
@@ -173,7 +181,10 @@ function drag(evt) {
 function dragging(evt) {
     if (draggingElement) {
         evt.preventDefault();
-        draggingElement.setAttributeNS(null, 'transform', `translate(${evt.clientX + draggingElement.draggingInfo.offsetX}, ${evt.clientY + draggingElement.draggingInfo.offsetY}) scale(${draggingElement.draggingInfo.scaleX} ${draggingElement.draggingInfo.scaleY})`);
+        var touchpos = evt;
+        if(touchpos.clientX == undefined)
+            touchpos = evt.targetTouches[0];
+        draggingElement.setAttributeNS(null, 'transform', `translate(${touchpos.clientX + draggingElement.draggingInfo.offsetX}, ${touchpos.clientY + draggingElement.draggingInfo.offsetY}) scale(${draggingElement.draggingInfo.scaleX} ${draggingElement.draggingInfo.scaleY})`);
     }
 }
 
@@ -250,12 +261,12 @@ function editName(uuid) {
     draw();
 }
 
-function mouseOverSvg(uuid) {
+function pointerOverSvg(uuid) {
     hoveringUuid = uuid;
     console.log('over: ' + hoveringUuid);
 }
 
-function mouseOutSvg(uuid) {
+function pointerOutSvg(uuid) {
     if(hoveringUuid == uuid)
     {
         hoveringUuid = null;
@@ -286,8 +297,9 @@ function getSignSvg(root, uuid, unit, x, y) {
     signSvg.setAttribute('uuid', uuid);
     signSvg.classList.add('draggable');
     signSvg.innerHTML = getSign(root['func'], unit);
-    signSvg.childNodes[0].setAttribute('onmouseover', `mouseOverSvg('${uuid}')`);
-    signSvg.childNodes[0].setAttribute('onmouseout', `mouseOutSvg('${uuid}')`);
+    signSvg.childNodes[0].setAttribute('touch-action', 'none');
+    signSvg.childNodes[0].setAttribute('onpointerover', `pointerOverSvg('${uuid}')`);
+    signSvg.childNodes[0].setAttribute('onpointerout', `pointerOutSvg('${uuid}')`);
     return signSvg;
 }
 
