@@ -3,7 +3,7 @@ const subColumns = 5
 const signWidth = 256
 const signHeight = 256
 const GAP = 50
-const LINESIZE = 24
+const LINESIZE = 26
 
 var draggingElement = null;
 var hoveringUuid = null;
