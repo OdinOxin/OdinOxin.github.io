@@ -6,10 +6,11 @@ const lineGap = 50
 var draggingElement = null;
 var hoveringUuid = null;
 
-var config = {
+var ZTr = {
+    "func": "Unit",
     "txt": "TZ",
-    "name": "Der Zugführer",
-    "func": "ZFü",
+    "org": "THW",
+    "attr": "troop,ofplatoon",
     "sub": [
         {
             "txt": "TZ",
@@ -34,7 +35,16 @@ var config = {
                     "txt": "KF"
                 }
             ]
-        },
+        }
+    ]
+};
+
+var BGr = {
+    "func": "Unit",
+    "txt": "B",
+    "org": "THW",
+    "attr": "group",
+    "sub": [
         {
             "txt": "B",
             "name": "Der Gruppenführer, der Bergung",
@@ -65,17 +75,27 @@ var config = {
             ]
         }
     ]
-}
+};
 
-config = {
+var TZ = {
     "func": "Unit",
     "txt": "TZ",
     "org": "THW",
     "attr": "platoon",
     "sub": [
-        config
+        {
+            "txt": "TZ",
+            "name": "Der Zugführer",
+            "func": "ZFü",
+            "sub": [
+                ZTr,
+                BGr,
+            ]
+        }
     ]
 }
+
+var config = TZ;
 
 iptConfig = document.getElementById('iptConfig');
 outputSvg = document.getElementById("outputSvg");
