@@ -11,30 +11,30 @@ var ZTr = {
     "txt": "TZ",
     "org": "THW",
     "attr": "troop,ofplatoon",
-    "sub": [
+    "with": [
         {
             "txt": "TZ",
             "name": "Der Zugtruppführer",
             "func": "ZTrFü",
-            "sub": [
-                {
-                    "name": "ZTr-Helfer 1",
-                    "func": "FaHe"
-                },
-                {
-                    "name": "ZTr-Helfer 2",
-                    "func": "FaHe"
-                },
-                {
-                    "name": "ZTr-Helfer 3",
-                    "func": "FaHe"
-                },
-                {
-                    "name": "ZTr-Helfer 4",
-                    "func": "FaHe",
-                    "txt": "KF"
-                }
-            ]
+        }
+    ],
+    "sub": [
+        {
+            "name": "ZTr-Helfer 1",
+            "func": "FaHe"
+        },
+        {
+            "name": "ZTr-Helfer 2",
+            "func": "FaHe"
+        },
+        {
+            "name": "ZTr-Helfer 3",
+            "func": "FaHe"
+        },
+        {
+            "name": "ZTr-Helfer 4",
+            "func": "FaHe",
+            "txt": "KF"
         }
     ]
 };
@@ -44,35 +44,35 @@ var BGr = {
     "txt": "B",
     "org": "THW",
     "attr": "group",
-    "sub": [
+    "with": [
         {
             "txt": "B",
             "name": "Der Gruppenführer, der Bergung",
             "func": "GrFü",
-            "sub": [
-                {
-                    "name": "Der Truppführer, der Bergung",
-                    "func": "TrFü",
-                    "txt": "B",
-                    "sub": null
-                },
-                {
-                    "name": "B-Helfer 1",
-                    "func": "FaHe"
-                },
-                {
-                    "name": "B-Helfer 2",
-                    "func": "FaHe"
-                },
-                {
-                    "name": "B-Helfer 3",
-                    "func": "FaHe"
-                },
-                {
-                    "name": "B-Helfer 4",
-                    "func": "FaHe"
-                }
-            ]
+        }
+    ],
+    "sub": [
+        {
+            "name": "Der Truppführer, der Bergung",
+            "func": "TrFü",
+            "txt": "B",
+            "sub": null
+        },
+        {
+            "name": "B-Helfer 1",
+            "func": "FaHe"
+        },
+        {
+            "name": "B-Helfer 2",
+            "func": "FaHe"
+        },
+        {
+            "name": "B-Helfer 3",
+            "func": "FaHe"
+        },
+        {
+            "name": "B-Helfer 4",
+            "func": "FaHe"
         }
     ]
 };
