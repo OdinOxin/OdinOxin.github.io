@@ -2,7 +2,7 @@ const maxColumns = 20
 const subColumns = 5
 const signWidth = 256
 const signHeight = 256
-const lineGap = 50
+const GAP = 50
 
 var draggingElement = null;
 var hoveringUuid = null;
@@ -14,28 +14,31 @@ var ZTr = {
     "attr": "troop,ofplatoon",
     "with": [
         {
-            "txt": "TZ",
             "name": "Der Zugtruppführer",
             "func": "ZTrFü",
+            "txt": "TZ",
         }
     ],
     "sub": [
         {
             "name": "ZTr-Helfer 1",
-            "func": "FaHe"
+            "func": "FaHe",
+            "txt": "ZTr",
         },
         {
             "name": "ZTr-Helfer 2",
-            "func": "FaHe"
+            "func": "FaHe",
+            "txt": "ZTr",
         },
         {
             "name": "ZTr-Helfer 3",
-            "func": "FaHe"
+            "func": "FaHe",
+            "txt": "ZTr",
         },
         {
             "name": "ZTr-Helfer 4",
             "func": "FaHe",
-            "txt": "KF"
+            "txt": "ZTr",
         }
     ]
 };
@@ -62,31 +65,37 @@ var BGr = {
         {
             "name": "B-Helfer 1",
             "func": "FaHe",
+            "txt": "B",
         },
         {
             "name": "B-Helfer 2",
             "func": "FaHe",
+            "txt": "B",
         },
         {
             "name": "B-Helfer 3",
             "func": "FaHe",
+            "txt": "B",
         },
         {
             "name": "B-Helfer 4",
             "func": "FaHe",
+            "txt": "B",
         },
         {
             "name": "B-Helfer 5",
             "func": "FaHe",
+            "txt": "B",
         },
         {
             "name": "B-Helfer 6",
             "func": "FaHe",
+            "txt": "B",
         },
         {
             "name": "B-Helfer 7",
             "func": "FaHe",
-            "txt": "KF",
+            "txt": "B",
         },
     ]
 };
@@ -98,14 +107,14 @@ var FGrN = {
     "attr": "group",
     "with": [
         {
-            "name": "Der Gruppenführer, der N",
+            "name": "Der Gruppenführer, der Notversorgung, und Notinstandsetzung",
             "func": "GrFü",
             "txt": "N",
         }
     ],
     "sub": [
         {
-            "name": "Der Truppführer, der N",
+            "name": "Der Truppführer, der Notversorgung, und Notinstandsetzung",
             "func": "TrFü",
             "txt": "N",
             "sub": null,
@@ -113,31 +122,37 @@ var FGrN = {
         {
             "name": "N-Helfer 1",
             "func": "FaHe",
+            "txt": "N",
         },
         {
             "name": "N-Helfer 2",
             "func": "FaHe",
+            "txt": "N",
         },
         {
             "name": "N-Helfer 3",
             "func": "FaHe",
+            "txt": "N",
         },
         {
             "name": "N-Helfer 4",
             "func": "FaHe",
+            "txt": "N",
         },
         {
             "name": "N-Helfer 5",
             "func": "FaHe",
+            "txt": "N",
         },
         {
             "name": "N-Helfer 6",
             "func": "FaHe",
+            "txt": "N",
         },
         {
             "name": "N-Helfer 7",
             "func": "FaHe",
-            "txt": "KF",
+            "txt": "N",
         },
     ]
 };
@@ -472,14 +487,14 @@ function drawRecursive(canvas, root, layer, x, y) {
             rowSub += 1;
         var subTrees = root["sub"].filter(item => item.hasOwnProperty('sub') && Array.isArray(item["sub"]) && item["sub"].length > 0);
         if(subTrees.length > 0) {
-            canvas.appendChild(getLine(x + colWith * signWidth - lineGap, y + signHeight / 2, x + colWith * signWidth, y + signHeight / 2));
+            canvas.appendChild(getLine(x + colWith * signWidth, y + signHeight / 2, x + GAP + colWith * signWidth, y + signHeight / 2));
             var rowLineEnd = rowSub;
             for(let subTree in subTrees) {
-                canvas.appendChild(getLine(x + colWith * signWidth, y + rowSub * signHeight + signHeight / 2, x + colWith * signWidth + lineGap, y + rowSub * signHeight + signHeight / 2));
+                canvas.appendChild(getLine(x + GAP + colWith * signWidth, y + rowSub * signHeight + signHeight / 2, x + 2 * GAP + colWith * signWidth, y + rowSub * signHeight + signHeight / 2));
                 rowLineEnd = rowSub;
-                rowSub += drawRecursive(canvas, subTrees[subTree], layer + 1, x + colWith * signWidth, y + rowSub * signHeight);
+                rowSub += drawRecursive(canvas, subTrees[subTree], layer + 1, x + 2 * GAP + colWith * signWidth, y + rowSub * signHeight);
             }
-            canvas.appendChild(getLine(x + colWith * signWidth, y + signHeight / 2, x + colWith * signWidth, y + rowLineEnd * signHeight + signHeight / 2));
+            canvas.appendChild(getLine(x + GAP + colWith * signWidth, y + signHeight / 2, x + GAP + colWith * signWidth, y + rowLineEnd * signHeight + signHeight / 2));
         }
     }
     return rowSub;
