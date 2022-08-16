@@ -118,7 +118,6 @@ var FGrN = {
             "name": "Der Truppführer, der Notversorgung, und Notinstandsetzung",
             "func": "TrFü",
             "txt": "N",
-            "sub": null,
         },
         {
             "name": "N-Helfer 1",
@@ -376,14 +375,15 @@ function pointerOutSvg(uuid) {
     }
 }
 
-function getSign(sign, txt, spez, org, attrTxt) {
+function getSign(sign, txt, spez, org, attrTxt, color) {
     var req = new XMLHttpRequest();
     req.open('GET', `/signs/${sign}.svg`, false);
     req.send();
     var svg = req.responseText
         .replace('{{TXT}}', txt)
         .replace('{{SPEZ}}', spez)
-        .replace('{{ORG}}', org);
+        .replace('{{ORG}}', org)
+        .replace('#003399', color);
     attrTxt.split(',').forEach(attr => {
         var attrFormatted = attr.trim().toUpperCase();
         svg = svg.replace(`{{${attrFormatted}`)
@@ -411,8 +411,11 @@ function getSignSvg(root, uuid, x, y) {
     var attr = '';
     if (root.hasOwnProperty('attr'))
         attr = root['attr'];
+    var color = '#003399';
+    if (root.hasOwnProperty('color'))
+        color = root['color'];
 
-    signSvg.innerHTML = getSign(root['func'], txt, spez, org, attr);
+    signSvg.innerHTML = getSign(root['func'], txt, spez, org, attr, color);
     signSvg.childNodes[0].setAttribute('touch-action', 'none');
     signSvg.childNodes[0].setAttribute('onpointerover', `pointerOverSvg('${uuid}')`);
     signSvg.childNodes[0].setAttribute('onpointerout', `pointerOutSvg('${uuid}')`);
