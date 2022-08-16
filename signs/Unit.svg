@@ -45,7 +45,7 @@
 	<rect x="11" y="166" width="234" height="25" fill="#FFFFFF" />
 	SUPPORT}}
 
-	<text style="font-family: 'Roboto Slab'; font-weight: bold; text-anchor: middle; font-size: 48px; " fill="#FFFFFF" x="128" y="145">{{TXT}}</text>
-	<text style="font-family: 'Roboto Slab'; font-weight: bold; text-anchor: start;" fill="#FFFFFF" x="20" y="180">{{SPEZ}}</text>
-	<text style="font-family: 'Roboto Slab'; font-weight: bold; text-anchor: end;" fill="#FFFFFF" x="236" y="180">{{ORG}}</text>
+	<text style="font-family: 'Lubalin Graph', 'Roboto Slab'; font-weight: bold; text-anchor: middle; font-size: 48px; " fill="#FFFFFF" x="128" y="145">{{TXT}}</text>
+	<text style="font-family: 'Lubalin Graph', 'Roboto Slab'; font-weight: bold; text-anchor: start;" fill="#FFFFFF" x="20" y="180">{{SPEZ}}</text>
+	<text style="font-family: 'Lubalin Graph', 'Roboto Slab'; font-weight: bold; text-anchor: end;" fill="#FFFFFF" x="236" y="180">{{ORG}}</text>
 </svg>
