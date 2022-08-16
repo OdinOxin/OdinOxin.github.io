@@ -383,7 +383,7 @@ function drawRecursive(canvas, root, layer, x, y) {
     if(root.hasOwnProperty('with') && Array.isArray(root['with'])){
         root['with'].forEach(item => {
             rowWith += 1;
-            drawSign(canvas, root, x, y + rowWith * signHeight);
+            drawSign(canvas, item, x, y + rowWith * signHeight);
         });
     }
     if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
