@@ -82,18 +82,18 @@ var TZ = {
     "txt": "TZ",
     "org": "THW",
     "attr": "platoon",
-    "sub": [
+    "with": [
         {
-            "txt": "TZ",
-            "name": "Der Zugführer",
             "func": "ZFü",
-            "sub": [
-                ZTr,
-                BGr,
-            ]
+            "name": "Der Zugführer",
+            "txt": "TZ",
         }
-    ]
-}
+    ],
+    "sub": [
+        ZTr,
+        BGr,
+    ],
+};
 
 var config = TZ;
 
@@ -359,8 +359,7 @@ function getText(uuid, text, x, y) {
     return txt;
 }
 
-function drawRecursive(canvas, root, layer, x, y) {
-    var row = 0;
+function drawSign(canvas, root, x, y) {
     var uuid = createUUID();
     root['uuid'] = uuid;
     if (root.hasOwnProperty('func')) {
@@ -375,6 +374,18 @@ function drawRecursive(canvas, root, layer, x, y) {
         }
         canvas.appendChild(itemBox);
     }
+}
+
+function drawRecursive(canvas, root, layer, x, y) {
+    var rowWith = 0;
+    var rowSub = 0;
+    drawSign(canvas, root, x, y);
+    if(root.hasOwnProperty('with') && Array.isArray(root['with'])){
+        root['with'].forEach(item => {
+            rowWith += 1;
+            drawSign(canvas, root, x, y + rowWith * signHeight);
+        });
+    }
     if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
         var col = 0;
         var leafs = root['sub'].filter(item => !item.hasOwnProperty('sub') || !Array.isArray(item["sub"]) || !item["sub"].length);
@@ -382,25 +393,25 @@ function drawRecursive(canvas, root, layer, x, y) {
             col += 1;
             if((col + layer) % 7 == 0) {
                 col = 1;
-                row += 1;
+                rowSub += 1;
             }
-            drawRecursive(canvas, leafs[leaf], layer + 1, x + col * signWidth, y + row * signHeight);
+            drawRecursive(canvas, leafs[leaf], layer + 1, x + col * signWidth, y + rowSub * signHeight);
         }
         if(leafs.length > 0)
-            row += 1;
+            rowSub += 1;
         var subTrees = root["sub"].filter(item => item.hasOwnProperty('sub') && Array.isArray(item["sub"]) && item["sub"].length > 0);
         if(subTrees.length > 0) {
             canvas.appendChild(getLine(x + signWidth - lineGap, y + signHeight / 2, x + signWidth, y + signHeight / 2));
-            var rowLineEnd = row;
+            var rowLineEnd = rowSub;
             for(let subTree in subTrees) {
-                canvas.appendChild(getLine(x + signWidth, y + row * signHeight + signHeight / 2, x + signWidth + lineGap, y + row * signHeight + signHeight / 2));
-                rowLineEnd = row;
-                row += drawRecursive(canvas, subTrees[subTree], layer + 1, x + signWidth, y + row * signHeight);
+                canvas.appendChild(getLine(x + signWidth, y + rowSub * signHeight + signHeight / 2, x + signWidth + lineGap, y + rowSub * signHeight + signHeight / 2));
+                rowLineEnd = rowSub;
+                rowSub += drawRecursive(canvas, subTrees[subTree], layer + 1, x + signWidth, y + rowSub * signHeight);
             }
             canvas.appendChild(getLine(x + signWidth, y + signHeight / 2, x + signWidth, y + rowLineEnd * signHeight + signHeight / 2));
         }
     }
-    return row;
+    return Math.max(rowWith, rowSub);
 }
 
 function draw() {
