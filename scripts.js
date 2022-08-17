@@ -474,6 +474,10 @@ function drawRecursive(canvas, root, layer, x, y) {
     }
     if(root.hasOwnProperty('sub') && Array.isArray(root['sub'])){
         var leafs = root['sub'].filter(item => !item.hasOwnProperty('sub') || !Array.isArray(item["sub"]) || !item["sub"].length);
+        var subTrees = root["sub"].filter(item => item.hasOwnProperty('sub') && Array.isArray(item["sub"]) && item["sub"].length > 0);
+        leafGap = 0;
+        if (subTrees.length > 0)
+            leafGap = GAP;
         for(let leaf in leafs){
             colSub += 1;
             if(colSub % subColumns == 0) {
@@ -484,11 +488,10 @@ function drawRecursive(canvas, root, layer, x, y) {
                 colSub = 1;
                 rowSub += 1;
             }
-            drawRecursive(canvas, leafs[leaf], layer + 1, x + (colWith - 1 + colSub) * signWidth, y + rowSub * signHeight);
+            drawRecursive(canvas, leafs[leaf], layer + 1, x + leafGap + (colWith - 1 + colSub) * signWidth, y + rowSub * signHeight);
         }
         if(leafs.length > 0)
             rowSub += 1;
-        var subTrees = root["sub"].filter(item => item.hasOwnProperty('sub') && Array.isArray(item["sub"]) && item["sub"].length > 0);
         if(subTrees.length > 0) {
             canvas.appendChild(getLine(x + colWith * signWidth, y + signHeight / 2, x + GAP + colWith * signWidth, y + signHeight / 2));
             var rowLineEnd = rowSub;
