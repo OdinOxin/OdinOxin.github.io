@@ -431,7 +431,7 @@ function getSignSvg(root, uuid, x, y) {
 
 function getLine(ax, ay, bx, by) {
     var line = document.createElement('path');
-    line.setAttribute('stroke-width', 1);
+    line.setAttribute('stroke-width', 3);
     line.setAttribute('stroke', 'black');
     line.setAttribute('d', `M${ax} ${ay} L${bx} ${by}`);
     return line;
