@@ -18,7 +18,7 @@ var ZTr = {
             "name": "Der Zugtruppführer",
             "func": "Person",
             "txt": "TZ",
-            "attr": "troop,ofplatoon",
+            "attr": "troop,ofplatoon,leading",
         }
     ],
     "sub": [
@@ -392,8 +392,9 @@ function getSign(sign, txt, spez, org, attrTxt, color) {
         .replace('#003399', color);
     attrTxt.split(',').forEach(attr => {
         var attrFormatted = attr.trim().toUpperCase();
-        svg = svg.replace(`{{${attrFormatted}`)
-            .replace(`${attrFormatted}}}`);
+        if(attrFormatted != '')
+            svg = svg.replace(`{{${attrFormatted}`)
+                .replace(`${attrFormatted}}}`);
     });
     return svg.replace(/{{\w+\s/g, '<!--')
         .replace(/\s\w+}}/g, '-->');
